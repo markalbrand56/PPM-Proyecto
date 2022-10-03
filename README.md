@@ -9,7 +9,7 @@ Se busca crear una aplicación que se ajuste a las necesidades de un estudiante,
     - Esta API se usará para determinar el clima durante el día de cada evento que el usuario cree. La API necesita la latitud y longitud de la ciudad, así como una “key” gratuita para utilizar la API.
     - Ejemplo de respuesta de la API:
 
-    ```
+```
 {
   "coord": {
     "lon": 10.99,
@@ -59,14 +59,14 @@ Se busca crear una aplicación que se ajuste a las necesidades de un estudiante,
   "name": "Zocca",
   "cod": 200
 }  
-    ```
+```
 
 2. Geocoding API
     - https://openweathermap.org/api/geocoding-api 
     - Es una API desarrollada para facilitar la búsqueda de localizaciones de las ciudades. Permite conocer con facilidad las coordenadas de una ciudad específica, utilizando el nombre de la ciudad y la llave, la cual es gratuita.
     - Ejemplo de respuesta de la API:
 
-    ```
+```
 [
   {
     "name": "London",
@@ -184,7 +184,7 @@ Se busca crear una aplicación que se ajuste a las necesidades de un estudiante,
     "state": "CA"
   }
 ]
-    ```
+```
 
 
 ## Librerías

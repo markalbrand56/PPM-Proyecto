@@ -1,4 +1,4 @@
-# NOMBRE
+# TodoBa
 
 ## Descripción
 Se busca crear una aplicación que se ajuste a las necesidades de un estudiante, ayudándolo en el día a día a mantenerse organizado, planificando todas sus tareas en un solo espacio. Nuestra aplicación les dará las herramientas necesarias para llevar el control de su vida estudiantil, ofreciéndoles herramientas para organizar su día a día. La aplicación tendrá características tales como: crear nuevos eventos, crear y dividir eventos por categorías, clasificaciones identificadas por colores y la posibilidad de registro de usuarios. Será una app desarrollada en el lenguaje de programación Kotlin, utilizando el programa de Android Studio como base en el desarrollo. 

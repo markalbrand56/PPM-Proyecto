@@ -16,4 +16,11 @@
     <string name="organiza_tu_vida_ahora">¡Organiza tu vida ahora!</string>
     <string name="selecciona_un_color_para_esta_categoria">Selecciona un color para esta categoria:</string>
     <string name="crear_categoria">Crear categoria</string>
+    <string name="nombre_del_evento">Nombre del evento</string>
+    <string name="hora">Hora</string>
+    <string name="fecha_limite">Fecha límite</string>
+    <string name="fecha_creacion">Fecha de creación</string>
+    <string name="categoria">Categoría</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="tiempo_horario">Tiempo horario</string>
 </resources>

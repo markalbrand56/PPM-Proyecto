@@ -1,4 +1,4 @@
-package com.uvg.todoba.Activities
+package com.uvg.todoba.ui.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

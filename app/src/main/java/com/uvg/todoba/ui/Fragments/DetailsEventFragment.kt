@@ -1,4 +1,4 @@
-package com.uvg.todoba.Fragments
+package com.uvg.todoba.ui.Fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

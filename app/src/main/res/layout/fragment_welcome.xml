@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Fragments.WelcomeFragment"
+    tools:context=".ui.Fragments.WelcomeFragment"
     tools:visibility="visible">
 
     <Button

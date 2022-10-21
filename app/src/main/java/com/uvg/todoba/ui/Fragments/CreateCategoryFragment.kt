@@ -1,4 +1,4 @@
-package com.uvg.todoba.Fragments
+package com.uvg.todoba.ui.Fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,6 @@ import android.view.ViewGroup
 import com.uvg.todoba.R
 
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
 
 }

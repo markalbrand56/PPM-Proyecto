@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:visibility="visible"
-    tools:context=".Fragments.CreateCategoryFragment">
+    tools:context=".ui.Fragments.CreateCategoryFragment">
 
     <TextView
         android:layout_width="match_parent"

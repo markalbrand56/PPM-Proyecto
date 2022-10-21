@@ -13,7 +13,7 @@
         android:theme="@style/Theme.TodoBa"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".ui.Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

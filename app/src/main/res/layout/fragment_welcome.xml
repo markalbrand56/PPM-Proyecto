@@ -5,12 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:visibility="visible"
-    tools:context=".Fragments.WelcomeFragment">
+    tools:context=".Fragments.WelcomeFragment"
+    tools:visibility="visible">
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/black"
+        android:text="Iniciar sesión"
+        app:layout_constraintEnd_toEndOf="@+id/button_CrearCuenta"
+        app:layout_constraintStart_toStartOf="@+id/button_CrearCuenta"
+        app:layout_constraintTop_toBottomOf="@+id/button_CrearCuenta" />
+
+    <Button
+        android:id="@+id/button_CrearCuenta"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginVertical="20dp"
+        android:backgroundTint="@color/black"
+        android:text="Crea tu cuenta"
+        app:layout_constraintEnd_toEndOf="@+id/WelcomeTextView"
+        app:layout_constraintStart_toStartOf="@+id/WelcomeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/WelcomeTextView" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/WelcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="TodoBa"
+        android:textColor="@color/black"
+        android:textSize="65dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

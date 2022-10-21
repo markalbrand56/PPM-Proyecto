@@ -23,11 +23,11 @@
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_add"
         android:background="@drawable/round_button"
         android:padding="15sp"
+        android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

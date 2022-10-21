@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_itemPlace"
+    android:layout_width="375dp"
+    android:layout_height="100dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginTop="20dp"
+    android:background="@color/gray"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/imageView_recyclePlace"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/purple_500"
+        app:circularflow_radiusInDP="800dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_recyclePlace_color"
+        android:layout_width="108dp"
+        android:layout_height="match_parent"
+        android:background="@color/teal_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_recyclePlace_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imageView_recyclePlace"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Titulo" />
+
+    <TextView
+        android:id="@+id/textView_recyclePlace_letra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_recyclePlace"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_recyclePlace"
+        app:layout_constraintStart_toStartOf="@+id/imageView_recyclePlace"
+        app:layout_constraintTop_toTopOf="@+id/imageView_recyclePlace"
+        tools:text="C" />
+
+    <TextView
+        android:id="@+id/textView_recyclerPlace_Status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_recyclePlace"
+        app:layout_constraintStart_toEndOf="@+id/imageView_recyclePlace"
+        app:layout_constraintTop_toBottomOf="@id/textView_recyclePlace_name"
+        tools:text="Categoria" />
+
+    <TextView
+        android:id="@+id/textView_recyclerPlace_fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/imageView_recyclePlace"
+        app:layout_constraintTop_toBottomOf="@+id/textView_recyclerPlace_Status"
+        tools:text="Fecha" />
+
+    <TextView
+        android:id="@+id/textView_recyclerPlace_hora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/textView_recyclerPlace_fecha"
+        app:layout_constraintTop_toBottomOf="@+id/textView_recyclerPlace_Status"
+        tools:text="Hora" />
+
+    <CheckBox
+        android:id="@+id/checkbox_recyclerplace"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_recyclePlace_color"
+        app:layout_constraintStart_toStartOf="@+id/imageView_recyclePlace_color"
+        app:layout_constraintTop_toTopOf="@+id/imageView_recyclePlace_color"
+        android:background="@color/white"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

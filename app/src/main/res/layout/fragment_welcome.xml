@@ -8,14 +8,26 @@
     tools:context=".Fragments.WelcomeFragment"
     tools:visibility="visible">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:src="@mipmap/ic_todoba_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/button_login"
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginVertical="20dp"
         android:layout_marginTop="32dp"
+        android:background="@drawable/rectangle_buttton"
         android:backgroundTint="@color/black"
-        android:text="Iniciar sesión"
+        android:text="@string/iniciar_sesion"
         app:layout_constraintEnd_toEndOf="@+id/button_CrearCuenta"
         app:layout_constraintStart_toStartOf="@+id/button_CrearCuenta"
         app:layout_constraintTop_toBottomOf="@+id/button_CrearCuenta" />
@@ -25,8 +37,8 @@
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginVertical="20dp"
-        android:backgroundTint="@color/black"
-        android:text="Crea tu cuenta"
+        android:background="@drawable/rectangle_buttton"
+        android:text="@string/crea_tu_cuenta"
         app:layout_constraintEnd_toEndOf="@+id/WelcomeTextView"
         app:layout_constraintStart_toStartOf="@+id/WelcomeTextView"
         app:layout_constraintTop_toBottomOf="@+id/WelcomeTextView" />
@@ -35,13 +47,27 @@
         android:id="@+id/WelcomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="TodoBa"
+        android:layout_marginTop="140dp"
+        android:text="@string/organiza_tu_vida_ahora"
         android:textColor="@color/black"
-        android:textSize="65dp"
+        android:textSize="@dimen/mid_textsize"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:scaleX="5"
+        android:scaleY="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:src="@mipmap/ic_people_foreground" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

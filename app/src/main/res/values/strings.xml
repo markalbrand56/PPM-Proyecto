@@ -4,4 +4,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="texto_de_ejemplo">Texto de ejemplo</string>
     <string name="titulo_ubicacion">Ubicación</string>
+    <string name="crear_evento">Crear evento</string>
+    <string name="marcar_como_completado">Marcar como completado</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="ingresa_correo">Ingresa tu correo</string>
+    <string name="ingresa_contrasena">Ingresa tu contraseña</string>
+    <string name="crear_cuenta">Crear cuenta</string>
+    <string name="crea_tu_cuenta">Crea tu cuenta</string>
+    <string name="todoba">TodoBa</string>
+    <string name="organiza_tu_vida_ahora">¡Organiza tu vida ahora!</string>
+    <string name="selecciona_un_color_para_esta_categoria">Selecciona un color para esta categoria:</string>
+    <string name="crear_categoria">Crear categoria</string>
 </resources>

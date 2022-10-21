@@ -217,4 +217,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_Comentarios" />
 
+    <Button
+        android:id="@+id/button_fragmentDetails_MarcarCompletado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/marcar_como_completado"
+        android:background="@drawable/rectangle_buttton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_TituloTiempoHorario" />
+
+    <ImageButton
+        android:id="@+id/button_fragmentDetails_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/margin_mid"
+        android:src="@drawable/ic_edit"
+        android:background="@drawable/round_button"
+        android:padding="20dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

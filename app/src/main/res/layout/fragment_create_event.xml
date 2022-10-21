@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:visibility="visible"
-    tools:context=".ui.Fragments.CreateEventFragment">
+    tools:context=".ui.fragments.CreateEventFragment">
 
     <TextView
         android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     app:startDestination="@id/welcomeFragment">
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.uvg.todoba.ui.Fragments.WelcomeFragment"
+        android:name="com.uvg.todoba.ui.fragments.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
-        android:name="com.uvg.todoba.ui.Fragments.CreateAccountFragment"
+        android:name="com.uvg.todoba.ui.fragments.CreateAccountFragment"
         android:label="fragment_create_account"
         tools:layout="@layout/fragment_create_account" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/createCategoryFragment"
-        android:name="com.uvg.todoba.ui.Fragments.CreateCategoryFragment"
+        android:name="com.uvg.todoba.ui.fragments.CreateCategoryFragment"
         android:label="fragment_create_category"
         tools:layout="@layout/fragment_create_category" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/createEventFragment"
-        android:name="com.uvg.todoba.ui.Fragments.CreateEventFragment"
+        android:name="com.uvg.todoba.ui.fragments.CreateEventFragment"
         android:label="fragment_create_event"
         tools:layout="@layout/fragment_create_event" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsEventFragment"
-        android:name="com.uvg.todoba.ui.Fragments.DetailsEventFragment"
+        android:name="com.uvg.todoba.ui.fragments.DetailsEventFragment"
         android:label="fragment_details_event"
         tools:layout="@layout/fragment_details_event" >
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.uvg.todoba.ui.Fragments.HomeFragment"
+        android:name="com.uvg.todoba.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -87,7 +87,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.uvg.todoba.ui.Fragments.LoginFragment"
+        android:name="com.uvg.todoba.ui.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action

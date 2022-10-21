@@ -1,4 +1,4 @@
-package com.uvg.todoba.ui.Fragments
+package com.uvg.todoba.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,18 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.uvg.todoba.R
-import com.uvg.todoba.databinding.FragmentWelcomeBinding
+import com.uvg.todoba.databinding.FragmentLoginBinding
 
 
-class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
-    private lateinit var binding: FragmentWelcomeBinding
+class LoginFragment : Fragment(R.layout.fragment_login) {
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,10 +29,7 @@ class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
 
     private fun setListeners() {
         binding.buttonLogin.setOnClickListener{
-            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToLoginFragment())
-        }
-        binding.buttonNewAccount.setOnClickListener{
-            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToCreateAccountFragment())
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
         }
     }
 }

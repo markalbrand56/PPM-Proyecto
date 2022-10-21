@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.Fragments.LoginFragment">
+    tools:context=".ui.fragments.LoginFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayout_loginfragment_password"

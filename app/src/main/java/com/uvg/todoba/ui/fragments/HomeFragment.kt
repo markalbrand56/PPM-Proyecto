@@ -41,7 +41,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
     }
 
     private fun setListeners() {
-        println()
+        binding.imageButtonHomeFragmentAddEvent.setOnClickListener{
+            it.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateEventFragment())
+        }
     }
 
     override fun onPlaceClicked(event: Event, position: Int) {

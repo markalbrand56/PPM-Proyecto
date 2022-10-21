@@ -51,6 +51,24 @@
         <action
             android:id="@+id/action_detailsEventFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="nombre"
+            app:argType="string" />
+        <argument
+            android:name="hora"
+            app:argType="string" />
+        <argument
+            android:name="fecha"
+            app:argType="string" />
+        <argument
+            android:name="categoria"
+            app:argType="string" />
+        <argument
+            android:name="ubicacion"
+            app:argType="string" />
+        <argument
+            android:name="comentarios"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"

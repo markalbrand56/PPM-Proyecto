@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.uvg.todoba.R
 import com.uvg.todoba.data.model.Event
@@ -13,7 +14,7 @@ import com.uvg.todoba.data.util.adapters.EventAdapter
 import com.uvg.todoba.databinding.FragmentHomeBinding
 
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var eventList: MutableList<Event>
 
@@ -40,6 +41,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setListeners() {
-        TODO("Not yet implemented")
+        println()
+    }
+
+    override fun onPlaceClicked(event: Event, position: Int) {
+        requireView().findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToDetailsEventFragment(
+                nombre = event.title,
+                fecha = event.date,
+                hora = event.time,
+                categoria = event.category,
+                ubicacion = event.location,
+                comentarios = event.description,
+            )
+        )
     }
 }

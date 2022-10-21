@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.uvg.todoba.R
 import com.uvg.todoba.databinding.FragmentLoginBinding
 
@@ -27,6 +28,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun setListeners() {
-        TODO("Not yet implemented")
+        binding.buttonLogin.setOnClickListener{
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+        }
     }
 }

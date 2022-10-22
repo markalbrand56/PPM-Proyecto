@@ -7,3 +7,4 @@
 # Aspectos opcionales
 1. Selección avanzada de colores para los eventos (Ver [Tercer entregable](https://uvg.instructure.com/courses/27121/assignments/430785))
 2. Registro de cuentas de usuario
+3. Notificaciones de eventos

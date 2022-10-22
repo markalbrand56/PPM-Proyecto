@@ -37,6 +37,7 @@ class DetailsEventFragment : Fragment(R.layout.fragment_details_event) {
         binding.textViewCategoria.text = args.categoria
         binding.textViewComentarios.text = args.comentarios
         binding.textViewTiempoHorario.text = "1 hora"
+        binding.imageView3.setImageResource(R.mipmap.ic_sunny_1)
     }
 
 

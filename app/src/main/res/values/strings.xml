@@ -23,4 +23,5 @@
     <string name="categoria">Categoría</string>
     <string name="comentarios">Comentarios</string>
     <string name="tiempo_horario">Tiempo horario</string>
+    <string name="clima">Clima</string>
 </resources>

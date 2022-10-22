@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_margin="20dp"
-        android:hint="Ingresa el nombre de la categoria"
+        android:hint="@string/hint_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

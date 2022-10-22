@@ -24,4 +24,9 @@
     <string name="comentarios">Comentarios</string>
     <string name="tiempo_horario">Tiempo horario</string>
     <string name="clima">Clima</string>
+    <string name="hint_password">Ingresa tu contraseña</string>
+    <string name="hint_email">Ingresa tu correo</string>
+    <string name="hint_category">Ingresa el nombre de la categoria</string>
+    <string name="hint_event_name">Ingresa el nombre del evento</string>
+    <string name="hint_event_date">Selecciona la fecha limite del evento:</string>
 </resources>

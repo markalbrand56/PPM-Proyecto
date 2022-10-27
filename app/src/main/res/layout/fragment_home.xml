@@ -19,16 +19,57 @@
         tools:listitem="@layout/item_recycler_place"
         />
 
-    <ImageButton
-        android:id="@+id/imageButton_HomeFragment_addEvent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton_HomeFragment_addEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_mid"
-        android:background="@drawable/round_button"
-        android:padding="15sp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/ic_add"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:layout_gravity="end"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addevent_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton_HomeFragment_addEvent"
+        app:layout_constraintEnd_toEndOf="@id/floatingActionButton_HomeFragment_addEvent"
+        app:layout_constraintStart_toStartOf="@id/floatingActionButton_HomeFragment_addEvent"
+        app:srcCompat="@drawable/ic_event"/>
+    <TextView
+        android:id="@+id/addevent_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Añadir un evento"
+        app:layout_constraintBottom_toBottomOf="@id/addevent_action"
+        app:layout_constraintEnd_toStartOf="@id/addevent_action"
+        app:layout_constraintTop_toTopOf="@id/addevent_action"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addCategory_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/addevent_action"
+        app:layout_constraintEnd_toEndOf="@+id/addevent_action"
+        app:layout_constraintStart_toStartOf="@+id/addevent_action"
+        app:srcCompat="@drawable/ic_category"/>
+    <TextView
+        android:id="@+id/addCategory_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Añadir una categoria"
+        app:layout_constraintBottom_toBottomOf="@+id/addCategory_action"
+        app:layout_constraintEnd_toStartOf="@+id/addCategory_action"
+        app:layout_constraintTop_toTopOf="@+id/addCategory_action"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

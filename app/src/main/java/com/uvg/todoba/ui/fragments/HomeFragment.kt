@@ -65,12 +65,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
         //}
         Add.setOnClickListener(View.OnClickListener{
             (if (!isAllAddVisible!!){
+                Add.animate().rotation(90F).setDuration(300)
                 AddEvent.show()
                 AddCategory.show()
                 AddEventText.visibility = View.VISIBLE
                 AddCategoryText.visibility = View.VISIBLE
                 true
             }else{
+                Add.animate().rotation(-90F).setDuration(300)
                 AddEvent.hide()
                 AddCategory.hide()
                 AddEventText.visibility = View.GONE

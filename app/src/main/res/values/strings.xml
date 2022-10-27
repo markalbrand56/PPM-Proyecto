@@ -29,4 +29,6 @@
     <string name="hint_category">Ingresa el nombre de la categoria</string>
     <string name="hint_event_name">Ingresa el nombre del evento</string>
     <string name="hint_event_date">Selecciona la fecha limite del evento:</string>
+    <string name="Anadir_evento">Añadir un evento</string>
+    <string name="anadir_categoria">Añadir una categoria</string>
 </resources>

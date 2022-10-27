@@ -30,14 +30,13 @@ class DetailsEventFragment : Fragment(R.layout.fragment_details_event) {
 
     private fun setupDetails() {
         binding.textViewNombreEvento.text = args.nombre
-        binding.textViewTituloUbicacion.text = args.ubicacion
+        binding.textViewUbicacion.text = args.ubicacion
         binding.textViewHora.text = args.hora
         binding.textViewFechaLimite.text = args.fecha
         binding.textViewFechaCreacion.text = "21/10/2022"
         binding.textViewCategoria.text = args.categoria
         binding.textViewComentarios.text = args.comentarios
         binding.textViewTiempoHorario.text = "1 hora"
-        binding.imageView3.setImageResource(R.mipmap.ic_sunny_1)
     }
 
 

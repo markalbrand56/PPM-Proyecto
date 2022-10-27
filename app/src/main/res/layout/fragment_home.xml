@@ -21,9 +21,9 @@
 
     <ImageButton
         android:id="@+id/imageButton_HomeFragment_addEvent"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_mid"
         android:background="@drawable/round_button"
         android:padding="15sp"
         android:src="@drawable/ic_add"

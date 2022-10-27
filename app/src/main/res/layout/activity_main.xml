@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:title="TodoBa"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        app:menu="@menu/menu_toolbar"
+        />
+
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/FragmentContainer_MainActivity"
         android:layout_width="0dp"
@@ -18,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_toolbar"
 
         />
 

@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="com.uvg.todoba.ui.fragments.WelcomeFragment"
-        android:label="fragment_welcome"
+        android:label="TodoBa"
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_loginFragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/createAccountFragment"
         android:name="com.uvg.todoba.ui.fragments.CreateAccountFragment"
-        android:label="fragment_create_account"
+        android:label="Crear cuenta"
         tools:layout="@layout/fragment_create_account" >
         <action
             android:id="@+id/action_createAccountFragment_to_homeFragment"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/createCategoryFragment"
         android:name="com.uvg.todoba.ui.fragments.CreateCategoryFragment"
-        android:label="fragment_create_category"
+        android:label="Crear categoría"
         tools:layout="@layout/fragment_create_category" >
         <action
             android:id="@+id/action_createCategoryFragment_to_homeFragment"
@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/createEventFragment"
         android:name="com.uvg.todoba.ui.fragments.CreateEventFragment"
-        android:label="fragment_create_event"
+        android:label="Crear evento"
         tools:layout="@layout/fragment_create_event" >
         <action
             android:id="@+id/action_createEventFragment_to_homeFragment"
@@ -46,7 +46,7 @@
     <fragment
         android:id="@+id/detailsEventFragment"
         android:name="com.uvg.todoba.ui.fragments.DetailsEventFragment"
-        android:label="fragment_details_event"
+        android:label="Evento"
         tools:layout="@layout/fragment_details_event" >
         <action
             android:id="@+id/action_detailsEventFragment_to_homeFragment"
@@ -73,7 +73,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.uvg.todoba.ui.fragments.HomeFragment"
-        android:label="fragment_home"
+        android:label="TodoBa"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_createEventFragment"
@@ -88,7 +88,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.uvg.todoba.ui.fragments.LoginFragment"
-        android:label="fragment_login"
+        android:label="Iniciar sesión"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"

@@ -50,7 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="55sp"
         android:layout_marginVertical="20dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/teal_700"
         android:background="@drawable/rectangle_buttton"
         android:text="@string/iniciar_sesion"
         app:layout_constraintEnd_toEndOf="@+id/inputLayout_loginfragment_password"

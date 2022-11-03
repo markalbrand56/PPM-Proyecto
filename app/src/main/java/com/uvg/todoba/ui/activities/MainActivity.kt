@@ -2,22 +2,24 @@ package com.uvg.todoba.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.uvg.todoba.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainToolbar: MaterialToolbar
     private lateinit var navController: NavController
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val navHostFragment = supportFragmentManager.findFragmentById(
             R.id.FragmentContainer_MainActivity
         ) as NavHostFragment

@@ -81,7 +81,6 @@ dependencies {
     // For example, add the dependencies for Firebase Authentication and Cloud Firestore
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
-    implementation 'com.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
 
     def hilt_Version = "2.44"
     implementation "com.google.dagger:hilt-android:$hilt_Version"

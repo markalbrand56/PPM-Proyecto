@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
     private lateinit var AddCategory : FloatingActionButton
     private lateinit var AddEventText : TextView
     private lateinit var AddCategoryText : TextView
+    private lateinit var transparent_bc : ConstraintLayout
     private var isAllAddVisible : Boolean? = null
 
     override fun onCreateView(
@@ -43,6 +45,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
         AddCategory = view.findViewById(R.id.addCategory_action)
         AddEventText = view.findViewById(R.id.addevent_action_text)
         AddCategoryText = view.findViewById(R.id.addCategory_action_text)
+        transparent_bc = view.findViewById(R.id.transparent_Layout)
         isAllAddVisible = false
         AddCategory.visibility = View.GONE
         AddEvent.visibility = View.GONE
@@ -70,6 +73,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
                 AddCategory.show()
                 AddEventText.visibility = View.VISIBLE
                 AddCategoryText.visibility = View.VISIBLE
+                transparent_bc.visibility = View.VISIBLE
                 true
             }else{
                 Add.animate().rotation(-90F).setDuration(300)
@@ -77,6 +81,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
                 AddCategory.hide()
                 AddEventText.visibility = View.GONE
                 AddCategoryText.visibility = View.GONE
+                transparent_bc.visibility = View.GONE
                 false
             }).also { isAllAddVisible = it }
         })

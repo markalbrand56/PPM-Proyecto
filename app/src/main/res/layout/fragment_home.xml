@@ -43,17 +43,7 @@
         app:layout_constraintEnd_toEndOf="@id/floatingActionButton_HomeFragment_addEvent"
         app:layout_constraintStart_toStartOf="@id/floatingActionButton_HomeFragment_addEvent"
         app:srcCompat="@drawable/ic_event"/>
-    <TextView
-        android:id="@+id/addevent_action_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/Anadir_evento"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/addevent_action"
-        app:layout_constraintEnd_toStartOf="@id/addevent_action"
-        app:layout_constraintTop_toTopOf="@id/addevent_action"
-        />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addCategory_action"
         android:layout_width="wrap_content"
@@ -65,6 +55,19 @@
         app:layout_constraintEnd_toEndOf="@+id/addevent_action"
         app:layout_constraintStart_toStartOf="@+id/addevent_action"
         app:srcCompat="@drawable/ic_category"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/transparent_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/transparency_gray"
+        android:visibility="invisible"
+        />
     <TextView
         android:id="@+id/addCategory_action_text"
         android:layout_width="wrap_content"
@@ -75,6 +78,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/addCategory_action"
         app:layout_constraintEnd_toStartOf="@+id/addCategory_action"
         app:layout_constraintTop_toTopOf="@+id/addCategory_action"
+        />
+    <TextView
+        android:id="@+id/addevent_action_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/Anadir_evento"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/addevent_action"
+        app:layout_constraintEnd_toStartOf="@id/addevent_action"
+        app:layout_constraintTop_toTopOf="@id/addevent_action"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

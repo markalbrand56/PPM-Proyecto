@@ -13,13 +13,17 @@ class FirebaseAuthApiImpl: AuthAPI {
     ): Resource<String> {
         val auth = Firebase.auth
 
-        val response = auth.signInWithEmailAndPassword(email, password).await()
-
-        val userInfo = response.user
-        return if (userInfo != null) {
-            Resource.Success(userInfo.uid)
-        } else {
-            Resource.Error("Error al iniciar sesión")
+        return try {
+            println("Signing in with email: '$email'")
+            println("Signing in with password: '$password'")
+            val result = auth.signInWithEmailAndPassword(email, password).await()
+            if (result.user != null) {
+                Resource.Success(result.user!!.uid)
+            } else {
+                Resource.Error("Error al iniciar sesión")
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Error al iniciar sesión")
         }
     }
 }

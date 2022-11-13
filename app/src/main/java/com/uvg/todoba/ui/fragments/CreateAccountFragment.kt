@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,6 +15,7 @@ import com.uvg.todoba.data.remote.firebase.FirebaseAuthApiImpl
 import com.uvg.todoba.data.repository.auth.AuthRepository
 import com.uvg.todoba.data.repository.auth.AuthRepositoryImpl
 import com.uvg.todoba.databinding.FragmentCreateAccountBinding
+import com.uvg.todoba.util.dataStore
 import kotlinx.coroutines.launch
 
 
@@ -45,11 +48,21 @@ class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
             lifecycleScope.launch{
                 val response = authRepository.createAccountWithEmailAndPassword(email, password)
                 if (response != null) {
+                    lifecycleScope.launch {
+                        saveKeyValue("user", response.toString())
+                    }
                     findNavController().navigate(R.id.action_createAccountFragment_to_homeFragment)
                 }else{
                     Toast.makeText(requireContext(), "Error al crear la cuenta", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private suspend fun saveKeyValue(key: String, value: String) {
+        val dataStoreKey = stringPreferencesKey(key)
+        requireContext().dataStore.edit { settings ->
+            settings[dataStoreKey] = value
         }
     }
 }

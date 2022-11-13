@@ -9,7 +9,7 @@
     tools:context=".ui.fragments.CreateAccountFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayout_loginfragment_password"
+        android:id="@+id/inputLayout_createAccountFragment_password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_margin="20dp"
         android:layout_width="0dp"
@@ -19,7 +19,7 @@
         app:endIconMode="password_toggle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputLayout_loginfragment_email">
+        app:layout_constraintTop_toBottomOf="@id/inputLayout_createAccountFragment_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputPassword"
@@ -29,7 +29,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayout_loginfragment_email"
+        android:id="@+id/inputLayout_createAccountFragment_email"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="55dp"
@@ -54,9 +54,9 @@
         android:backgroundTint="@color/black"
         android:text="@string/crear_cuenta"
         android:background="@drawable/rectangle_buttton"
-        app:layout_constraintEnd_toEndOf="@+id/inputLayout_loginfragment_password"
-        app:layout_constraintStart_toStartOf="@+id/inputLayout_loginfragment_password"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayout_loginfragment_password" />
+        app:layout_constraintEnd_toEndOf="@+id/inputLayout_createAccountFragment_password"
+        app:layout_constraintStart_toStartOf="@+id/inputLayout_createAccountFragment_password"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayout_createAccountFragment_password" />
     <TextView
         android:id="@+id/WelcomeTextView"
         android:layout_width="wrap_content"

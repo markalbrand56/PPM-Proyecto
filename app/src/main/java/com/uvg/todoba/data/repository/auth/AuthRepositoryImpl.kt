@@ -12,4 +12,14 @@ class AuthRepositoryImpl(
             is Resource.Error -> null
         }
     }
+
+    override suspend fun createAccountWithEmailAndPassword(
+        email: String,
+        password: String
+    ): String? {
+        return when (val response = authAPI.createAccountWithEmailAndPassword(email, password)) {
+            is Resource.Success -> response.data!!
+            is Resource.Error -> null
+        }
+    }
 }

@@ -26,4 +26,24 @@ class FirebaseAuthApiImpl: AuthAPI {
             Resource.Error(e.message ?: "Error al iniciar sesión")
         }
     }
+
+    override suspend fun createAccountWithEmailAndPassword(
+        email: String,
+        password: String
+    ): Resource<String> {
+        val auth = Firebase.auth
+
+        return try {
+            println("Creating account with email: '$email'")
+            println("Creating account with password: '$password'")
+            val result = auth.createUserWithEmailAndPassword(email, password).await()
+            if (result.user != null) {
+                Resource.Success(result.user!!.uid)
+            } else {
+                Resource.Error("Error al crear la cuenta")
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Error al crear la cuenta")
+        }
+    }
 }

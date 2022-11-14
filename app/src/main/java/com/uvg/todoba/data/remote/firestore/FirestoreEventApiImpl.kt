@@ -10,13 +10,13 @@ class FirestoreEventApiImpl(
     private val db: FirebaseFirestore
 ): EventsApi {
     override suspend fun insert(event: EventDTO, userId: String) {
-        db.collection("${userId}/data/events")
+        db.collection("$/${userId}/data/events")
             .add(event)
             .await()
     }
 
     override suspend fun update(event: EventDTO, userId: String) {
-        db.collection("${userId}/data/events")
+        db.collection("/${userId}/data/events")
             .document(event.id.toString())
             .set(event)
             .await()
@@ -24,7 +24,7 @@ class FirestoreEventApiImpl(
 
     override suspend fun getById(id: Int, userId: String): EventDTO? {
         try {
-            val document = db.collection("${userId}/data/events")
+            val document = db.collection("/${userId}/data/events")
                 .document(id.toString())
                 .get()
                 .await()
@@ -40,21 +40,25 @@ class FirestoreEventApiImpl(
             val querySnapshot = db.collection("/${userId}/data/events")
                 .get()
                 .await()
-            return querySnapshot.documents.mapNotNull { it.toObject<EventDTO>() }
+            println("\n\n\n\n\n\n\n\n\n\n")
+            println(querySnapshot.documents)
+            val result = querySnapshot.documents.map {documentSnapshot -> documentSnapshot.toObject<EventDTO>()!!}
+            return result
         } catch (e: Exception) {
+            println(e.message)
             return null
         }
     }
 
     override suspend fun deleteById(id: Int, userId: String) {
-        db.collection("${userId}/data/events")
+        db.collection("/${userId}/data/events")
             .document(id.toString())
             .delete()
             .await()
     }
 
     override suspend fun deleteAll(userId: String) {
-        db.collection("${userId}/data/events")
+        db.collection("/${userId}/data/events")
             .get()
             .await()
             .documents

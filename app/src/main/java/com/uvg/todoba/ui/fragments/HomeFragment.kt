@@ -68,7 +68,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
         lifecycleScope.launch {
             val uid = getValueFromKey("user")
             if (uid != null) {
-                eventList = repositoryEvent.getEvents(uid) as MutableList<Event>
+                val eventsDb = repositoryEvent.getEvents(uid)
+                eventList = eventsDb?.toMutableList() ?: mutableListOf<Event>()
             }
             binding.recyclerViewHomeFragment.layoutManager = LinearLayoutManager(context)
             binding.recyclerViewHomeFragment.setHasFixedSize(true)

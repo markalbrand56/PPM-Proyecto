@@ -54,6 +54,15 @@ class EventRepositoryImpl(
                 return null
             }
         }
+/*        val eventsApi = api.getAll(userID)
+        val events = if (eventsApi != null) {
+            for (event in eventsApi) {
+                db.insertEvent(event.toEntity())
+            }
+            eventsApi.map { it.toEntity() }
+        } else {
+            null
+        }*/
         return events
     }
 

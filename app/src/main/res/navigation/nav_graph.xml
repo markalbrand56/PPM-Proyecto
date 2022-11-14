@@ -23,6 +23,8 @@
         tools:layout="@layout/fragment_create_account" >
         <action
             android:id="@+id/action_createAccountFragment_to_homeFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/homeFragment" />
     </fragment>
     <fragment
@@ -92,6 +94,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

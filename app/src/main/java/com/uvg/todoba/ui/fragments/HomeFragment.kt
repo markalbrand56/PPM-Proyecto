@@ -5,22 +5,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.room.Room
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.uvg.todoba.R
-import com.uvg.todoba.data.model.Event
-import com.uvg.todoba.data.model.TestDatabase
+import com.uvg.todoba.data.local.database.DatabaseEvents
+import com.uvg.todoba.data.local.database.EventDao
+import com.uvg.todoba.data.local.entity.Event
+import com.uvg.todoba.data.local.entity.TestDatabase
+import com.uvg.todoba.data.remote.firestore.FirestoreEventApiImpl
+import com.uvg.todoba.data.repository.event.EventRepository
+import com.uvg.todoba.data.repository.event.EventRepositoryImpl
 import com.uvg.todoba.data.util.adapters.EventAdapter
 import com.uvg.todoba.databinding.FragmentHomeBinding
+import com.uvg.todoba.util.dataStore
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var eventList: MutableList<Event>
     private var isAllAddVisible : Boolean? = null
+    private lateinit var repositoryEvent: EventRepository
+    private lateinit var databaseEvents: DatabaseEvents
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,20 +45,37 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        databaseEvents = Room.databaseBuilder(
+            requireContext(),
+            DatabaseEvents::class.java,
+            "eventsDB"
+        ).build()
+
+        repositoryEvent = EventRepositoryImpl(
+            FirestoreEventApiImpl(Firebase.firestore),
+            databaseEvents.eventDao()
+        )
         isAllAddVisible = false
         binding.addCategoryAction.visibility = View.GONE
         binding.addEventAction.visibility = View.GONE
         binding.addeventActionText.visibility = View.GONE
         binding.addCategoryActionText.visibility = View.GONE
-        setListeners()
         setupRecyclerView()
     }
 
     private fun setupRecyclerView() {
-        eventList = TestDatabase.getEvents()
-        binding.recyclerViewHomeFragment.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewHomeFragment.setHasFixedSize(true)
-        binding.recyclerViewHomeFragment.adapter = EventAdapter(eventList, this)
+        lifecycleScope.launch {
+            val uid = getValueFromKey("user")
+            if (uid != null) {
+                eventList = repositoryEvent.getEvents(uid) as MutableList<Event>
+            }
+            binding.recyclerViewHomeFragment.layoutManager = LinearLayoutManager(context)
+            binding.recyclerViewHomeFragment.setHasFixedSize(true)
+            binding.recyclerViewHomeFragment.adapter = EventAdapter(eventList, this@HomeFragment)
+            setListeners()
+        }
+
     }
 
     private fun setListeners() {
@@ -91,5 +120,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
                 comentarios = event.description,
             )
         )
+    }
+
+    private suspend fun getValueFromKey(key: String) : String? {
+        val dataStoreKey = stringPreferencesKey(key)
+        val preferences = requireContext().dataStore.data.first()
+        return preferences[dataStoreKey]
     }
 }

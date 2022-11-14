@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.uvg.todoba.R
-import com.uvg.todoba.data.model.Event
+import com.uvg.todoba.data.local.entity.Event
 
 class EventAdapter (
     private val dataSet: MutableList<Event>,

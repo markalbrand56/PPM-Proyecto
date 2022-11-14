@@ -1,7 +1,8 @@
-package com.uvg.todoba.data.model
+package com.uvg.todoba.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.uvg.todoba.data.remote.dto.EventDTO
 
 @Entity
 data class Event(
@@ -12,6 +13,16 @@ data class Event(
     val time: String,
     val location: String,
     val description: String,
+)
+
+fun Event.toDTO() = EventDTO(
+    id = id,
+    title = title,
+    category = category,
+    date = date,
+    time = time,
+    location = location,
+    description = description,
 )
 
 object TestDatabase {

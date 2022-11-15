@@ -50,9 +50,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             lifecycleScope.launch {
                 val response = authRepository.signInWithEmailAndPassword(email, password)
                 if (response != null) {
-                    lifecycleScope.launch {
                         saveKeyValue("user", response.toString())
-                    }
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }else{
                     Toast.makeText(requireContext(), "Error al iniciar sesión", Toast.LENGTH_SHORT).show()

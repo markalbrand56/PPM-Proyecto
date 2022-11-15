@@ -11,7 +11,8 @@ class FirestoreEventApiImpl(
 ): EventsApi {
     override suspend fun insert(event: EventDTO, userId: String) {
         db.collection("$/${userId}/data/events")
-            .add(event)
+            .document(event.id.toString())
+            .set(event)
             .await()
     }
 

@@ -10,10 +10,13 @@ class FirestoreEventApiImpl(
     private val db: FirebaseFirestore
 ): EventsApi {
     override suspend fun insert(event: EventDTO, userId: String) {
-        db.collection("$/${userId}/data/events")
-            .document(event.id.toString())
+        db.collection(userId)
+            .document("data")
+            .collection("events")
+            .document("${event.id}")
             .set(event)
             .await()
+
     }
 
     override suspend fun update(event: EventDTO, userId: String) {

@@ -96,14 +96,11 @@ class EventRepositoryImpl(
 
     override suspend fun deleteAllEvents(userID: String): Resource<Boolean> {
         return try {
-            val result = api.deleteAll(userID)
-            if (result is Resource.Success) {
-                db.deleteAllEvents()
-            } else if (result is Resource.Error) {
-                return Resource.Error(result.message ?: "Error")
-            }
-            result
-        } catch (e: Exception) {
+            // Solo se elimina de la base de datos local
+            // Se usa al cerrar sesión, no hay opción de eliminar todos los eventos de Firestore
+            db.deleteAllEvents()
+            Resource.Success(true)
+        }catch (e: Exception) {
             Resource.Error(e.message ?: "Error")
         }
     }

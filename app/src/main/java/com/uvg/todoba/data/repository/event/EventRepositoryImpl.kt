@@ -1,5 +1,6 @@
 package com.uvg.todoba.data.repository.event
 
+import com.uvg.todoba.data.Resource
 import com.uvg.todoba.data.local.database.EventDao
 import com.uvg.todoba.data.local.entity.Event
 import com.uvg.todoba.data.local.entity.toDTO
@@ -10,19 +11,46 @@ class EventRepositoryImpl(
     private val api: EventsApi,
     private val db: EventDao
 ): EventRepository {
-    override suspend fun createEvent(event: Event, userID: String) {
-        api.insert(event.toDTO(), userID)
-        db.insertEvent(event)
+    override suspend fun createEvent(event: Event, userID: String): Resource<Boolean> {
+        return try {
+            val result = api.insert(event.toDTO(), userID)
+            if (result is Resource.Success) {
+                db.insertEvent(event)
+            } else if (result is Resource.Error) {
+                return Resource.Error(result.message ?: "Error")
+            }
+            result
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Error")
+        }
     }
 
-    override suspend fun updateEvent(event: Event, userID: String) {
-        api.update(event.toDTO(), userID)
-        db.updateEvent(event)
+    override suspend fun updateEvent(event: Event, userID: String): Resource<Boolean> {
+        return try {
+            val result = api.update(event.toDTO(), userID)
+            if (result is Resource.Success) {
+                db.updateEvent(event)
+            } else if (result is Resource.Error) {
+                return Resource.Error(result.message ?: "Error")
+            }
+            result
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Error")
+        }
     }
 
-    override suspend fun deleteEvent(event: Event, userID: String) {
-        api.deleteById(event.id, userID)
-        db.deleteEvent(event.id)
+    override suspend fun deleteEvent(event: Event, userID: String): Resource<Boolean> {
+        return try {
+            val result = api.deleteById(event.id, userID)
+            if (result is Resource.Success) {
+                db.deleteEvent(event.id)
+            } else if (result is Resource.Error) {
+                return Resource.Error(result.message ?: "Error")
+            }
+            result
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Error")
+        }
     }
 
     override suspend fun getEventById(id: Int, userID: String): Event? {
@@ -66,9 +94,18 @@ class EventRepositoryImpl(
         return events
     }
 
-    override suspend fun deleteAllEvents(userID: String) {
-        api.deleteAll(userID)
-        db.deleteAllEvents()
+    override suspend fun deleteAllEvents(userID: String): Resource<Boolean> {
+        return try {
+            val result = api.deleteAll(userID)
+            if (result is Resource.Success) {
+                db.deleteAllEvents()
+            } else if (result is Resource.Error) {
+                return Resource.Error(result.message ?: "Error")
+            }
+            result
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Error")
+        }
     }
 
 

@@ -73,7 +73,28 @@ object TestDatabase {
             description = "Llevar regalo",
         ),
     )
+    private val categories = mutableListOf<Category>(
+        Category(
+            id = 1,
+            name = "Hogar",
+        ),
+        Category(
+            id = 2,
+            name = "Actividades",
+        ),
+        Category(
+            id = 3,
+            name = "Universidad",
+        ),
+        Category(
+            id = 4,
+            name = "Cumpleaños",
+        ),
+    )
     fun getEvents(): MutableList<Event> {
         return events
+    }
+    fun getCategories(): MutableList<Category> {
+        return categories
     }
 }

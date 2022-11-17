@@ -16,6 +16,8 @@ import com.uvg.todoba.data.repository.category.CategoryRepository
 import com.uvg.todoba.data.repository.category.CategoryRepositoryImpl
 import com.uvg.todoba.databinding.FragmentCreateEventBinding
 
+import com.uvg.todoba.data.local.entity.TestDatabase
+
 
 class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var binding: FragmentCreateEventBinding
@@ -45,6 +47,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             FirestoreCategoryApiImpl(Firebase.firestore),
             databaseCategories.categoryDao()
         )
+        categoryList = TestDatabase.getCategories()  // TODO: Cambiar por la lista de categorias de la base de datos
         println()
     }
 

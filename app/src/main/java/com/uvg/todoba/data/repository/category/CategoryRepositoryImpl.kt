@@ -29,10 +29,13 @@ class CategoryRepositoryImpl(
     }
 
     override suspend fun deleteAllCategories(userID: String): Resource<Boolean> {
-        val result = categoriesApi.deleteAll(userID)
-        if (result is Resource.Success) {
+        return try {
+            // Solo se borra de la base de datos local
+            // Se usa al cerrar sesión
             categoryDao.deleteAllCategories()
+            Resource.Success(true)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Error")
         }
-        return result
     }
 }

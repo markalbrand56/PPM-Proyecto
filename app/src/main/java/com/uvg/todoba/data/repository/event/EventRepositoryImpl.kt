@@ -9,13 +9,13 @@ import com.uvg.todoba.data.remote.dto.toEntity
 
 class EventRepositoryImpl(
     private val api: EventsApi,
-    private val db: EventDao
+    private val eventDao: EventDao
 ): EventRepository {
     override suspend fun createEvent(event: Event, userID: String): Resource<Boolean> {
         return try {
             val result = api.insert(event.toDTO(), userID)
             if (result is Resource.Success) {
-                db.insertEvent(event)
+                eventDao.insertEvent(event)
             } else if (result is Resource.Error) {
                 return Resource.Error(result.message ?: "Error")
             }
@@ -29,7 +29,7 @@ class EventRepositoryImpl(
         return try {
             val result = api.update(event.toDTO(), userID)
             if (result is Resource.Success) {
-                db.updateEvent(event)
+                eventDao.updateEvent(event)
             } else if (result is Resource.Error) {
                 return Resource.Error(result.message ?: "Error")
             }
@@ -43,7 +43,7 @@ class EventRepositoryImpl(
         return try {
             val result = api.deleteById(event.id, userID)
             if (result is Resource.Success) {
-                db.deleteEvent(event.id)
+                eventDao.deleteEvent(event.id)
             } else if (result is Resource.Error) {
                 return Resource.Error(result.message ?: "Error")
             }
@@ -55,11 +55,11 @@ class EventRepositoryImpl(
 
     override suspend fun getEventById(id: Int, userID: String): Event? {
         // Primero se intenta obtener de la base de datos local, si no se prueba con Firestore
-        val event = db.getEventById(id)
+        val event = eventDao.getEventById(id)
         if (event == null) {
             val eventDTO = api.getById(id, userID)
             if (eventDTO != null) {
-                db.insertEvent(eventDTO.toEntity())
+                eventDao.insertEvent(eventDTO.toEntity())
                 return eventDTO.toEntity()
             } else{
                 return null
@@ -70,12 +70,12 @@ class EventRepositoryImpl(
 
     override suspend fun getEvents(userID: String): List<Event>? {
         // Primero se intenta obtener de la base de datos local, si no se prueba con Firestore
-        val events = db.getEvents()
+        val events = eventDao.getEvents()
         if (events.isEmpty()) {
             val eventsDTO = api.getAll(userID)
             if (eventsDTO != null) {
                 for (event in eventsDTO) {
-                    db.insertEvent(event.toEntity())
+                    eventDao.insertEvent(event.toEntity())
                 }
                 return eventsDTO.map { it.toEntity() }
             } else{
@@ -98,7 +98,7 @@ class EventRepositoryImpl(
         return try {
             // Solo se elimina de la base de datos local
             // Se usa al cerrar sesión, no hay opción de eliminar todos los eventos de Firestore
-            db.deleteAllEvents()
+            eventDao.deleteAllEvents()
             Resource.Success(true)
         }catch (e: Exception) {
             Resource.Error(e.message ?: "Error")

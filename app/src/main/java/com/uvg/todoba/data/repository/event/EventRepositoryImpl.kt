@@ -54,22 +54,22 @@ class EventRepositoryImpl(
         }
     }
 
-    override suspend fun getEventById(id: Int, userID: String): Event? {
+    override suspend fun getEventById(id: Int, userID: String): Resource<Event?> {
         // Primero se intenta obtener de la base de datos local, si no se prueba con Firestore
         val event = eventDao.getEventById(id)
         if (event == null) {
             val eventDTO = api.getById(id, userID)
-            if (eventDTO != null) {
+            return if (eventDTO != null) {
                 eventDao.insertEvent(eventDTO.toEntity())
-                return eventDTO.toEntity()
+                Resource.Success(eventDTO.toEntity())
             } else{
-                return null
+                Resource.Error("Error")
             }
         }
-        return event!!
+        return Resource.Success(event)
     }
 
-    override suspend fun getEvents(userID: String): List<Event>? {
+    override suspend fun getEvents(userID: String): Resource<List<Event>?> {
         // Primero se intenta obtener de la base de datos local, si no se prueba con Firestore
         val events = eventDao.getEvents()
         if (events.isEmpty()) {
@@ -78,9 +78,9 @@ class EventRepositoryImpl(
                 for (event in eventsDTO) {
                     eventDao.insertEvent(event.toEntity())
                 }
-                return eventsDTO.map { it.toEntity() }
+                return Resource.Success(eventsDTO.map { it.toEntity() })
             } else{
-                return null
+                return Resource.Error("Error")
             }
         }
 /*        val eventsApi = api.getAll(userID)
@@ -92,16 +92,30 @@ class EventRepositoryImpl(
         } else {
             null
         }*/
-        return events
+        return Resource.Success(events)
     }
 
-    override suspend fun deleteAllEvents(userID: String): Resource<Boolean> {
+    override suspend fun clearAllEvents(userID: String): Resource<Boolean> {
         return try {
             // Solo se elimina de la base de datos local
             // Se usa al cerrar sesión, no hay opción de eliminar todos los eventos de Firestore
             eventDao.deleteAllEvents()
             Resource.Success(true)
         }catch (e: Exception) {
+            Resource.Error(e.message ?: "Error")
+        }
+    }
+
+    override suspend fun deleteAllEvents(userID: String): Resource<Boolean> {
+        return try {
+            val result = api.deleteAll(userID)
+            if (result is Resource.Success) {
+                eventDao.deleteAllEvents()
+            } else if (result is Resource.Error) {
+                return Resource.Error(result.message ?: "Error")
+            }
+            result
+        } catch (e: Exception) {
             Resource.Error(e.message ?: "Error")
         }
     }

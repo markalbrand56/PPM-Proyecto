@@ -24,6 +24,7 @@ import com.uvg.todoba.databinding.FragmentHomeBinding
 import com.uvg.todoba.ui.viewmodels.EventViewModel
 import com.uvg.todoba.ui.viewmodels.states.EventState
 import com.uvg.todoba.util.dataStore
+import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -69,7 +70,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
 
         setObservables()
         lifecycleScope.launch {
-            viewModel.getEvents(getValueFromKey("user")!!)
+            viewModel.getEvents(requireContext().dataStore.getPreference("user", ""))
         }
         setListeners()
     }

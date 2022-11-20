@@ -2,6 +2,7 @@ package com.uvg.todoba.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.uvg.todoba.data.Resource
 import com.uvg.todoba.data.local.entity.Event
 import com.uvg.todoba.data.repository.event.EventRepository
 import com.uvg.todoba.ui.viewmodels.states.EventState
@@ -18,15 +19,31 @@ class EventViewModel(
 
     private var eventJob: Job? = null
 
-    fun getEvents(uid: String){
+    fun addEvent(uid: String, event: Event){
         eventJob?.cancel()
         eventJob = viewModelScope.launch {
             _eventState.value = EventState.Loading
             try {
-                val events = eventRepository.getEvents(uid)
+                val events = eventRepository.createEvent(event, uid)
                 if (events != null) {
-                    _eventState.value = EventState.Updated(events)
+                    getEvents(uid)
+                } else {
                     _eventState.value = EventState.Empty
+                }
+            } catch (e: Exception){
+                _eventState.value = EventState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    fun updateEvent(uid: String, event: Event){
+        eventJob?.cancel()
+        eventJob = viewModelScope.launch {
+            _eventState.value = EventState.Loading
+            try {
+                val events = eventRepository.updateEvent(event, uid)
+                if (events is Resource.Success) {
+                    getEvents(uid)
                 } else {
                     _eventState.value = EventState.Empty
                 }
@@ -53,13 +70,48 @@ class EventViewModel(
         }
     }
 
-    fun addEvent(uid: String, event: Event){
+    fun getEvents(uid: String){
         eventJob?.cancel()
         eventJob = viewModelScope.launch {
             _eventState.value = EventState.Loading
             try {
-                val events = eventRepository.createEvent(event, uid)
-                if (events != null) {
+                val events = eventRepository.getEvents(uid)
+                if (events is Resource.Success) {
+                    _eventState.value = EventState.Updated(events.data!!)
+                    _eventState.value = EventState.Empty
+                } else {
+                    _eventState.value = EventState.Empty
+                }
+            } catch (e: Exception){
+                _eventState.value = EventState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    fun clearAllEvents(uid: String){
+        eventJob?.cancel()
+        eventJob = viewModelScope.launch {
+            _eventState.value = EventState.Loading
+            try {
+                val events = eventRepository.clearAllEvents(uid)
+                if (events is Resource.Success) {
+                    getEvents(uid)
+                } else {
+                    _eventState.value = EventState.Empty
+                }
+            } catch (e: Exception){
+                _eventState.value = EventState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    fun deleteAllEvents(uid: String){
+        eventJob?.cancel()
+        eventJob = viewModelScope.launch {
+            _eventState.value = EventState.Loading
+            try {
+                val events = eventRepository.deleteAllEvents(uid)
+                if (events is Resource.Success) {
                     getEvents(uid)
                 } else {
                     _eventState.value = EventState.Empty

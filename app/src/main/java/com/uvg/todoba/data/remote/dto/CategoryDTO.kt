@@ -5,10 +5,11 @@ import com.uvg.todoba.data.local.entity.Category
 
 data class CategoryDTO(
     val name: String = "",
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val id: Int = 0,
+    val firebaseId: String = "",
 ) {
     fun toEntity() = Category(
-        id = id,
         name = name,
+        firebaseId = firebaseId,
     )
 }

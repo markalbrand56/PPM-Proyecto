@@ -6,7 +6,7 @@ import com.uvg.todoba.data.local.entity.Category
 @Dao
 interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategory(category: Category)
+    suspend fun insertCategory(category: Category): Long
 
     @Query("SELECT * FROM category")
     suspend fun getCategories(): List<Category>

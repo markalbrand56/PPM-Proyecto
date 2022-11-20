@@ -6,7 +6,8 @@ import com.uvg.todoba.data.remote.dto.EventDTO
 
 @Entity
 data class Event(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    val firestoreId: String,
     val title: String,
     val category: String,
     val date: String,
@@ -15,8 +16,9 @@ data class Event(
     val description: String,
 )
 
-fun Event.toDTO() = EventDTO(
-    id = id,
+fun Event.toDTO(paramId: Int) = EventDTO(
+    id = paramId,
+    firestoreId = firestoreId,
     title = title,
     category = category,
     date = date,
@@ -24,77 +26,3 @@ fun Event.toDTO() = EventDTO(
     location = location,
     description = description,
 )
-
-object TestDatabase {
-    private val events = mutableListOf(
-        Event(
-            id = 1,
-            title = "Comprar jugo de naranja",
-            category = "Hogar",
-            date = "22/10/2022",
-            time = "10:00",
-            location = "Supermercado",
-            description = "Comprar jugo de naranja para el desayuno",
-        ),
-        Event(
-            id = 2,
-            title = "Cena en casa de Carlos",
-            category = "Actividades",
-            date = "23/10/2022",
-            time = "19:00",
-            location = "Casa de Carlos",
-            description = "Llevar gaseosa y pan",
-        ),
-        Event(
-            id = 3,
-            title = "Hoja de Trabajo 11",
-            category = "Universidad",
-            date = "24/10/2022",
-            time = "8:00",
-            location = "Aula 1",
-            description = "Entregar hoja de trabajo 11",
-        ),
-        Event(
-            id = 4,
-            title = "Examen Parcial 2",
-            category = "Universidad",
-            date = "26/10/2022",
-            time = "14:00",
-            location = "Aula 12",
-            description = "Examen parcial 2 de Programación 2",
-        ),
-        Event(
-            id = 5,
-            title = "Cumpleaños Marlon",
-            category = "Cumpleaños",
-            date = "29/10/2022",
-            time = "",
-            location = "Casa de Marlon",
-            description = "Llevar regalo",
-        ),
-    )
-    private val categories = mutableListOf<Category>(
-        Category(
-            id = 1,
-            name = "Hogar",
-        ),
-        Category(
-            id = 2,
-            name = "Actividades",
-        ),
-        Category(
-            id = 3,
-            name = "Universidad",
-        ),
-        Category(
-            id = 4,
-            name = "Cumpleaños",
-        ),
-    )
-    fun getEvents(): MutableList<Event> {
-        return events
-    }
-    fun getCategories(): MutableList<Category> {
-        return categories
-    }
-}

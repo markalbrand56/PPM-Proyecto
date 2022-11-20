@@ -5,6 +5,7 @@ import com.uvg.todoba.data.local.entity.Event
 
 data class EventDTO(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val firestoreId: String = "",
     val title: String = "",
     val category: String = "",
     val date: String = "",
@@ -14,7 +15,7 @@ data class EventDTO(
 )
 
 fun EventDTO.toEntity() = Event(
-    id = id,
+    firestoreId = firestoreId,
     title = title,
     category = category,
     date = date,

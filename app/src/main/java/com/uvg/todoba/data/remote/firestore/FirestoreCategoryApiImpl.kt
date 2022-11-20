@@ -15,7 +15,7 @@ class FirestoreCategoryApiImpl(
             firestore.collection(userId)
                 .document("data")
                 .collection("categories")
-                .document("${category.id}")
+                .document("${category.firebaseId}")
                 .set(category)
                 .await()
             Resource.Success(true)

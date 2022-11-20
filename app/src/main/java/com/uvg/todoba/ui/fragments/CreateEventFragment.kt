@@ -8,19 +8,26 @@ import android.widget.Toast
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.uvg.todoba.R
 import com.uvg.todoba.data.local.database.DatabaseCategories
+import com.uvg.todoba.data.local.database.DatabaseEvents
 import com.uvg.todoba.data.local.entity.Category
 import com.uvg.todoba.data.remote.firestore.FirestoreCategoryApiImpl
+import com.uvg.todoba.data.remote.firestore.FirestoreEventApiImpl
 import com.uvg.todoba.data.repository.category.CategoryRepository
 import com.uvg.todoba.data.repository.category.CategoryRepositoryImpl
+import com.uvg.todoba.data.repository.event.EventRepository
+import com.uvg.todoba.data.repository.event.EventRepositoryImpl
 import com.uvg.todoba.databinding.FragmentCreateEventBinding
 
 import com.uvg.todoba.ui.viewmodels.CategoryViewModel
+import com.uvg.todoba.ui.viewmodels.EventViewModel
 import com.uvg.todoba.ui.viewmodels.states.CategoryState
+import com.uvg.todoba.ui.viewmodels.states.EventState
 import com.uvg.todoba.util.dataStore
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
@@ -30,9 +37,12 @@ import kotlinx.coroutines.launch
 class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var binding: FragmentCreateEventBinding
     private lateinit var categoryList: MutableList<Category>
-    private lateinit var repositoryCategoryRepository: CategoryRepository
+    private lateinit var categoryRepository: CategoryRepository
     private lateinit var databaseCategories: DatabaseCategories
-    private lateinit var viewModel: CategoryViewModel
+    private lateinit var categoryViewModel: CategoryViewModel
+    private lateinit var eventRepository : EventRepository
+    private lateinit var databaseEvents: DatabaseEvents
+    private lateinit var eventViewModel: EventViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,13 +62,26 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             "categoriesDB"
         ).build()
 
-        repositoryCategoryRepository = CategoryRepositoryImpl(
+        categoryRepository = CategoryRepositoryImpl(
             FirestoreCategoryApiImpl(Firebase.firestore),
             databaseCategories.categoryDao()
         )
-        viewModel = CategoryViewModel(repositoryCategoryRepository)
+        categoryViewModel = CategoryViewModel(categoryRepository)
+
+        databaseEvents = Room.databaseBuilder(
+            requireContext(),
+            DatabaseEvents::class.java,
+            "eventsDB"
+        ).build()
+
+        eventRepository = EventRepositoryImpl(
+            FirestoreEventApiImpl(Firebase.firestore),
+            databaseEvents.eventDao()
+        )
+        eventViewModel = EventViewModel(eventRepository)
+
         lifecycleScope.launch {
-            viewModel.getCategories(getValueFromKey("user")!!)
+            categoryViewModel.getCategories(getValueFromKey("user")!!)
         }
 
         setObservables()
@@ -73,13 +96,38 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
 
     private fun setObservables() {
         lifecycleScope.launchWhenStarted {
-            viewModel.categoryState.collectLatest { state ->
-                handleState(state)
+            categoryViewModel.categoryState.collectLatest { state ->
+                handleCategoryState(state)
+            }
+        }
+        lifecycleScope.launchWhenStarted {
+            eventViewModel.eventState.collectLatest { state ->
+                handleEventState(state)
             }
         }
     }
 
-    private fun handleState(state: CategoryState) {
+    private fun handleEventState(state: EventState) {
+        when (state) {
+            is EventState.Loading -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Loading",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            is EventState.Updated -> {
+                Toast.makeText(requireContext(), "Evento creado", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(CreateCategoryFragmentDirections.actionCreateCategoryFragmentToHomeFragment())
+            }
+            is EventState.Error -> {
+                Toast.makeText(requireContext(), "Error al crear evento", Toast.LENGTH_SHORT).show()
+            }
+            else -> {}
+        }
+    }
+
+    private fun handleCategoryState(state: CategoryState) {
         when (state) {
             is CategoryState.Updated -> {
                 categoryList = state.categories.toMutableList()

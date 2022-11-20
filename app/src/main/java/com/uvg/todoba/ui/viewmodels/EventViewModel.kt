@@ -52,4 +52,21 @@ class EventViewModel(
             }
         }
     }
+
+    fun addEvent(uid: String, event: Event){
+        eventJob?.cancel()
+        eventJob = viewModelScope.launch {
+            _eventState.value = EventState.Loading
+            try {
+                val events = eventRepository.createEvent(event, uid)
+                if (events != null) {
+                    getEvents(uid)
+                } else {
+                    _eventState.value = EventState.Empty
+                }
+            } catch (e: Exception){
+                _eventState.value = EventState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
 }

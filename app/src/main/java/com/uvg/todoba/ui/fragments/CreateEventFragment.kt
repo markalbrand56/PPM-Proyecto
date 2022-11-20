@@ -29,6 +29,7 @@ import com.uvg.todoba.ui.viewmodels.EventViewModel
 import com.uvg.todoba.ui.viewmodels.states.CategoryState
 import com.uvg.todoba.ui.viewmodels.states.EventState
 import com.uvg.todoba.util.dataStore
+import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -37,9 +38,11 @@ import kotlinx.coroutines.launch
 class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var binding: FragmentCreateEventBinding
     private lateinit var categoryList: MutableList<Category>
+
     private lateinit var categoryRepository: CategoryRepository
     private lateinit var databaseCategories: DatabaseCategories
     private lateinit var categoryViewModel: CategoryViewModel
+
     private lateinit var eventRepository : EventRepository
     private lateinit var databaseEvents: DatabaseEvents
     private lateinit var eventViewModel: EventViewModel
@@ -61,7 +64,6 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             DatabaseCategories::class.java,
             "categoriesDB"
         ).build()
-
         categoryRepository = CategoryRepositoryImpl(
             FirestoreCategoryApiImpl(Firebase.firestore),
             databaseCategories.categoryDao()
@@ -73,7 +75,6 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             DatabaseEvents::class.java,
             "eventsDB"
         ).build()
-
         eventRepository = EventRepositoryImpl(
             FirestoreEventApiImpl(Firebase.firestore),
             databaseEvents.eventDao()
@@ -81,7 +82,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
         eventViewModel = EventViewModel(eventRepository)
 
         lifecycleScope.launch {
-            categoryViewModel.getCategories(getValueFromKey("user")!!)
+            categoryViewModel.getCategories(requireContext().dataStore.getPreference("user", ""))
         }
 
         setObservables()

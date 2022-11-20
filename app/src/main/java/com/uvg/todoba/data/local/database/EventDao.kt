@@ -10,7 +10,7 @@ import com.uvg.todoba.data.local.entity.Event
 @Dao
 interface EventDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEvent(event: Event)
+    suspend fun insertEvent(event: Event): Long
 
     @Update
     suspend fun updateEvent(event: Event)

@@ -13,13 +13,14 @@ class EventRepositoryImpl(
 ): EventRepository {
     override suspend fun createEvent(event: Event, userID: String): Resource<Boolean> {
         return try {
-            val result = api.insert(event.toDTO(), userID)
-            if (result is Resource.Success) {
-                eventDao.insertEvent(event)
-            } else if (result is Resource.Error) {
-                return Resource.Error(result.message ?: "Error")
+            val newId = eventDao.insertEvent(event)
+            if (newId >= 0) {
+                val result = api.insert(event.toDTO(newId.toInt()), userID)
+                if (result is Resource.Success) {
+                    return Resource.Success(true)
+                }
             }
-            result
+            Resource.Error("Error")
         } catch (e: Exception) {
             Resource.Error(e.message ?: "Error")
         }
@@ -27,7 +28,7 @@ class EventRepositoryImpl(
 
     override suspend fun updateEvent(event: Event, userID: String): Resource<Boolean> {
         return try {
-            val result = api.update(event.toDTO(), userID)
+            val result = api.update(event.toDTO(event.id!!), userID)
             if (result is Resource.Success) {
                 eventDao.updateEvent(event)
             } else if (result is Resource.Error) {
@@ -41,9 +42,9 @@ class EventRepositoryImpl(
 
     override suspend fun deleteEvent(event: Event, userID: String): Resource<Boolean> {
         return try {
-            val result = api.deleteById(event.id, userID)
+            val result = api.deleteById(event.id!!, userID)
             if (result is Resource.Success) {
-                eventDao.deleteEvent(event.id)
+                eventDao.deleteEvent(event.id!!)
             } else if (result is Resource.Error) {
                 return Resource.Error(result.message ?: "Error")
             }

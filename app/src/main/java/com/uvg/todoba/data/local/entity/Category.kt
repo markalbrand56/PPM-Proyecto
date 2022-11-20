@@ -6,11 +6,13 @@ import com.uvg.todoba.data.remote.dto.CategoryDTO
 
 @Entity
 data class Category(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    val firebaseId: String,
     val name: String,
 )
 
-fun Category.toDTO() = CategoryDTO(
-    id = id,
+fun Category.toDTO(paramId: Int) = CategoryDTO(
+    id = paramId,
     name = name,
+    firebaseId = firebaseId,
 )

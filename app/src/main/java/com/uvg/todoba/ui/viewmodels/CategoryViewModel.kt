@@ -10,6 +10,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class CategoryViewModel(
     private val categoryRepository: CategoryRepository
@@ -41,7 +42,11 @@ class CategoryViewModel(
         eventJob = viewModelScope.launch {
             _categoryState.value = CategoryState.Loading
             try {
-                val categories = categoryRepository.createCategory(CategoryDTO(name = name).toEntity(), uid)
+                val category = Category(
+                    firebaseId = UUID.randomUUID().toString(),
+                    name = name
+                )
+                val categories = categoryRepository.createCategory(category, uid)
                 if (categories != null) {
                     getCategories(uid)
                 } else {

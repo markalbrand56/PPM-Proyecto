@@ -11,11 +11,18 @@ class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao
 ) : CategoryRepository {
     override suspend fun createCategory(category: Category, userID: String): Resource<Boolean> {
-        val result = categoriesApi.insert(category.toDTO(), userID)
+        /*val result = categoriesApi.insert(category.toDTO(), userID)
         if (result is Resource.Success) {
             categoryDao.insertCategory(category)
+        }*/
+        val newId = categoryDao.insertCategory(category)
+        if (newId >= 0) {
+            val result = categoriesApi.insert(category.toDTO(newId.toInt()), userID)
+            if (result is Resource.Success) {
+                return Resource.Success(true)
+            }
         }
-        return result
+        return Resource.Error("Error")
     }
 
     override suspend fun getAllCategories(userID: String): List<Category>? {

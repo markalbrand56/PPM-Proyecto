@@ -4,17 +4,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.uvg.todoba.R
+import com.uvg.todoba.data.local.database.DatabaseEvents
+import com.uvg.todoba.data.remote.firestore.FirestoreEventApiImpl
+import com.uvg.todoba.data.repository.event.EventRepository
+import com.uvg.todoba.data.repository.event.EventRepositoryImpl
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainToolbar: MaterialToolbar
     private lateinit var navController: NavController
+    private lateinit var eventRepository: EventRepository
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +46,38 @@ class MainActivity : AppCompatActivity() {
         mainToolbar = findViewById(R.id.main_toolbar)
         mainToolbar.setupWithNavController(navController, appBarConfiguration)
 
+        val db = Room.databaseBuilder(
+            applicationContext,
+            DatabaseEvents::class.java
+            , "eventsDB"
+        ).build()
+
+        eventRepository = EventRepositoryImpl(
+            FirestoreEventApiImpl(Firebase.firestore),
+            db.eventDao()
+        )
+
+
         listenToNavGraphChanges()
+        setOnClickListeners()
+    }
+
+    private fun setOnClickListeners() {
+        mainToolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_item_logout -> {
+                    println("Logout")
+                    true
+                }
+                R.id.menu_item_deleteAll -> {
+                    lifecycleScope.launch {
+                        println("Delete all")
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun listenToNavGraphChanges() {

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -14,15 +15,16 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.uvg.todoba.R
 import com.uvg.todoba.data.local.database.DatabaseEvents
-import com.uvg.todoba.data.local.database.EventDao
 import com.uvg.todoba.data.local.entity.Event
-import com.uvg.todoba.data.local.entity.TestDatabase
 import com.uvg.todoba.data.remote.firestore.FirestoreEventApiImpl
 import com.uvg.todoba.data.repository.event.EventRepository
 import com.uvg.todoba.data.repository.event.EventRepositoryImpl
 import com.uvg.todoba.data.util.adapters.EventAdapter
 import com.uvg.todoba.databinding.FragmentHomeBinding
+import com.uvg.todoba.ui.viewmodels.EventViewModel
+import com.uvg.todoba.ui.viewmodels.states.EventState
 import com.uvg.todoba.util.dataStore
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -33,6 +35,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
     private var isAllAddVisible : Boolean? = null
     private lateinit var repositoryEvent: EventRepository
     private lateinit var databaseEvents: DatabaseEvents
+    private lateinit var viewModel: EventViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,22 +64,51 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
         binding.addEventAction.visibility = View.GONE
         binding.addeventActionText.visibility = View.GONE
         binding.addCategoryActionText.visibility = View.GONE
-        setupRecyclerView()
+
+        viewModel = EventViewModel(repositoryEvent)
+
+        setObservables()
+        lifecycleScope.launch {
+            viewModel.getEvents(getValueFromKey("user")!!)
+        }
+        setListeners()
     }
 
-    private fun setupRecyclerView() {
-        lifecycleScope.launch {
-            val uid = getValueFromKey("user")
-            if (uid != null) {
-                val eventsDb = repositoryEvent.getEvents(uid)
-                eventList = eventsDb?.toMutableList() ?: mutableListOf<Event>()
+    private fun setObservables(){
+        lifecycleScope.launchWhenStarted {
+            viewModel.eventState.collectLatest { state ->
+                handleState(state)
             }
-            binding.recyclerViewHomeFragment.layoutManager = LinearLayoutManager(context)
-            binding.recyclerViewHomeFragment.setHasFixedSize(true)
-            binding.recyclerViewHomeFragment.adapter = EventAdapter(eventList, this@HomeFragment)
-            setListeners()
         }
+    }
 
+    private fun handleState(state: EventState) {
+        when(state){
+            is EventState.Updated -> {
+                eventList = state.events.toMutableList()
+                binding.recyclerViewHomeFragment.layoutManager = LinearLayoutManager(context)
+                binding.recyclerViewHomeFragment.setHasFixedSize(true)
+                binding.recyclerViewHomeFragment.adapter = EventAdapter(eventList, this)
+            }
+            is EventState.Error -> {
+                Toast.makeText(
+                    requireContext(),
+                    state.message,
+                    Toast.LENGTH_SHORT).show()
+            }
+            is EventState.Loading -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Loading...",
+                    Toast.LENGTH_SHORT).show()
+            }
+            is EventState.Empty -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Empty",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setListeners() {

@@ -1,9 +1,10 @@
 package com.uvg.todoba.data.remote.dto
 
+import androidx.room.PrimaryKey
 import com.uvg.todoba.data.local.entity.Event
 
 data class EventDTO(
-    val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String = "",
     val category: String = "",
     val date: String = "",

@@ -16,8 +16,8 @@ data class Event(
     val description: String,
 )
 
-fun Event.toDTO(paramId: Int) = EventDTO(
-    id = paramId,
+fun Event.toDTO(roomID: Int) = EventDTO(
+    id = roomID,
     firestoreId = firestoreId,
     title = title,
     category = category,

@@ -3,16 +3,14 @@ package com.uvg.todoba.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uvg.todoba.data.local.entity.Event
-import com.uvg.todoba.data.repository.category.CategoryRepository
 import com.uvg.todoba.data.repository.event.EventRepository
-import com.uvg.todoba.ui.viewmodels.states.CategoryState
 import com.uvg.todoba.ui.viewmodels.states.EventState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel(
+class EventViewModel(
     private val eventRepository: EventRepository
 ): ViewModel() {
     private val _eventState = MutableStateFlow<EventState>(EventState.Empty)

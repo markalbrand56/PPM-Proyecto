@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -16,7 +19,12 @@ import com.uvg.todoba.data.repository.category.CategoryRepository
 import com.uvg.todoba.data.repository.category.CategoryRepositoryImpl
 import com.uvg.todoba.databinding.FragmentCreateEventBinding
 
-import com.uvg.todoba.data.local.entity.TestDatabase
+import com.uvg.todoba.ui.viewmodels.CategoryViewModel
+import com.uvg.todoba.ui.viewmodels.states.CategoryState
+import com.uvg.todoba.util.dataStore
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
@@ -24,6 +32,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var categoryList: MutableList<Category>
     private lateinit var repositoryCategoryRepository: CategoryRepository
     private lateinit var databaseCategories: DatabaseCategories
+    private lateinit var viewModel: CategoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,8 +56,56 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             FirestoreCategoryApiImpl(Firebase.firestore),
             databaseCategories.categoryDao()
         )
-        categoryList = TestDatabase.getCategories()  // TODO: Cambiar por la lista de categorias de la base de datos
-        println()
+        viewModel = CategoryViewModel(repositoryCategoryRepository)
+        lifecycleScope.launch {
+            viewModel.getCategories(getValueFromKey("user")!!)
+        }
+
+        setObservables()
+        setOnClickListeners()
     }
 
+    private fun setOnClickListeners() {
+        binding.buttonCrearEvento.setOnClickListener {
+
+        }
+    }
+
+    private fun setObservables() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.categoryState.collectLatest { state ->
+                handleState(state)
+            }
+        }
+    }
+
+    private fun handleState(state: CategoryState) {
+        when (state) {
+            is CategoryState.Updated -> {
+                categoryList = state.categories.toMutableList()
+                // ACA AÑADIR LA LISTA A EL SPINNER
+            }
+            is CategoryState.Error -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Error: ${state.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            is CategoryState.Loading -> {
+                Toast.makeText(
+                    requireContext(),
+                    "Loading...",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else -> {}
+        }
+    }
+
+    private suspend fun getValueFromKey(key: String) : String? {
+        val dataStoreKey = stringPreferencesKey(key)
+        val preferences = requireContext().dataStore.data.first()
+        return preferences[dataStoreKey]
+    }
 }

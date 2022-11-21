@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_item_deleteAll -> {
                     lifecycleScope.launch {
                         eventViewModel.deleteAllEvents(applicationContext.dataStore.getPreference("user", ""))
-                        navController.navigate(R.id.homeFragment)
+
                     }
                     true
                 }

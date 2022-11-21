@@ -20,9 +20,12 @@
             android:id="@+id/inputLayout_createCategoryFragment_nombreEvento"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:hint="@string/hint_event_name"
+            app:helperText="@string/required"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/colorRed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -39,8 +42,10 @@
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textview_createCategoryFragment_TituloCalendario"
@@ -107,8 +112,11 @@
             android:id="@+id/inputLayout_createCategoryFragment_lugarEvento"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="356dp"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:hint="@string/lugar_del_evento"
+            app:helperText="@string/required"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/colorRed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloLugar">
@@ -153,9 +161,12 @@
             android:id="@+id/inputLayout_createCategoryFragment_comentario"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="356dp"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_mid"
             android:hint="@string/comentario"
+            app:helperText="@string/required"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/colorRed"
             app:counterMaxLength="30"
             app:layout_constraintEnd_toEndOf="parent"
             app:counterEnabled="true"

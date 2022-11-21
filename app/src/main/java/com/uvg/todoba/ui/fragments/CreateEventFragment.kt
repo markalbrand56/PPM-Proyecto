@@ -1,10 +1,17 @@
 package com.uvg.todoba.ui.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TimePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.view.get
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -42,6 +49,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private val args: CreateEventFragmentArgs by navArgs()
     private lateinit var binding: FragmentCreateEventBinding
     private lateinit var categoryList: MutableList<Category>
+    private var options : ArrayList<String> = arrayListOf()
 
     private lateinit var categoryRepository: CategoryRepository
     private lateinit var databaseCategories: DatabaseCategories
@@ -51,7 +59,9 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var databaseEvents: DatabaseEvents
     private lateinit var eventViewModel: EventViewModel
 
-    private lateinit var sp1 : 
+    private lateinit var timePicker: TimePicker
+
+    private lateinit var sp1 : Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +74,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        sp1 = view.findViewById(R.id.spinner_createCategoryFragment)
         databaseCategories = Room.databaseBuilder(
             requireContext(),
             DatabaseCategories::class.java,
@@ -100,8 +110,10 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             binding.textInputLugar.setText(args.event!!.location)
             binding.textInputComentario.setText(args.event!!.description)
         }
+
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun setOnClickListeners() {
         binding.buttonCrearEvento.setOnClickListener {
             if(args.event != null){
@@ -115,7 +127,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                             title = binding.textInputTitle.text.toString(),
                             category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
                             date = binding.calendarCreateCategoryFragment.date.toString(),
-                            time = "",
+                            time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
                             location = binding.textInputLugar.text.toString(),
                             description = binding.textInputComentario.text.toString(),
                         )
@@ -131,7 +143,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                             title = binding.textInputTitle.text.toString(),
                             category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
                             date = binding.calendarCreateCategoryFragment.date.toString(),
-                            time = "",
+                            time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
                             location = binding.textInputLugar.text.toString(),
                             description = binding.textInputComentario.text.toString(),
                         )
@@ -165,7 +177,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             }
             is EventState.Updated -> {
                 Toast.makeText(requireContext(), "Evento creado", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(CreateCategoryFragmentDirections.actionCreateCategoryFragmentToHomeFragment())
+                findNavController().navigate(CreateEventFragmentDirections.actionCreateEventFragmentToHomeFragment())
             }
             is EventState.Error -> {
                 Toast.makeText(requireContext(), "Error al crear evento", Toast.LENGTH_SHORT).show()
@@ -178,7 +190,24 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
         when (state) {
             is CategoryState.Updated -> {
                 categoryList = state.categories.toMutableList()
-                // ACA AÑADIR LA LISTA A EL SPINNER
+                options = arrayListOf()
+                for (item in categoryList) {
+                    if (item.name.isNotEmpty()) {
+                        options.add(item.name)
+                    }
+                }
+                val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, options)
+                sp1.adapter = arrayAdapter
+                sp1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        Toast.makeText(requireContext(), "option selected", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+
+                }
             }
             is CategoryState.Error -> {
                 Toast.makeText(

@@ -54,25 +54,21 @@ class EventRepositoryImpl(
         }
     }
 
-    override suspend fun getEventById(id: Int, userID: String): Resource<Event?> {
+    override suspend fun getEventByFireStoreId(id: String, userID: String): Resource<Event?> {
         // Primero se intenta obtener de la base de datos local, si no se prueba con Firestore
-        val event = eventDao.getEventById(id)
-        if (event == null) {
-            val eventDTO = api.getById(id, userID)
-            return if (eventDTO is Resource.Success) {
-                eventDTO.data?.let { eventDao.insertEvent(it.toEntity()) }
-                Resource.Success(eventDTO.data?.toEntity())
-            } else{
-                Resource.Error("Error")
-            }
+        val event = api.getById(id, userID)
+        return if (event is Resource.Success){
+            Resource.Success(event.data?.toEntity(event.data.id))
+        }else{
+            Resource.Error(event.message ?: "Error")
         }
-        return Resource.Success(event)
+
     }
 
     override suspend fun getEvents(userID: String): Resource<List<Event>?> {
         val eventsApi = api.getAll(userID)
         return if (eventsApi is Resource.Success) {
-            val events = eventsApi.data!!.map { eventDTO -> eventDTO.toEntity() }
+            val events = eventsApi.data!!.map { eventDTO -> eventDTO.toEntity(eventDTO.id) }
             // Se actualiza la base de datos local con los datos más recientes
             eventDao.deleteAllEvents()
             for (event in events) {

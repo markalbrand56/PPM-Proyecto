@@ -38,7 +38,7 @@ class FirestoreEventApiImpl(
         }
     }
 
-    override suspend fun getById(id: Int, userId: String): Resource<EventDTO?> {
+    override suspend fun getById(id: String, userId: String): Resource<EventDTO?> {
         return try {
             val document = firestore.collection(userId)
                 .document("data")

@@ -4,7 +4,7 @@ import androidx.room.PrimaryKey
 import com.uvg.todoba.data.local.entity.Event
 
 data class EventDTO(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val id: Int = 0,
     val firestoreId: String = "",
     val title: String = "",
     val category: String = "",
@@ -14,7 +14,8 @@ data class EventDTO(
     val description: String = "",
 )
 
-fun EventDTO.toEntity() = Event(
+fun EventDTO.toEntity(roomID: Int) = Event(
+    id = roomID,
     firestoreId = firestoreId,
     title = title,
     category = category,

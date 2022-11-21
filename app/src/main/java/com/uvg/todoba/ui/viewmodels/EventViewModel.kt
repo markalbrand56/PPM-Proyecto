@@ -88,12 +88,12 @@ class EventViewModel(
         }
     }
 
-    fun getEvent(uid: String, id: Int){
+    fun getEvent(uid: String, id: String){
         eventJob?.cancel()
         eventJob = viewModelScope.launch {
             _eventState.value = EventState.Loading
             try {
-                val events = eventRepository.getEventById(id, uid)
+                val events = eventRepository.getEventByFireStoreId(id, uid)
                 if (events is Resource.Success) {
                     _eventState.value = EventState.Fetched(events.data!!)
                 } else {

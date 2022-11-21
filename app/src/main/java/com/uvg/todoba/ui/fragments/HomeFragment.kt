@@ -168,11 +168,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
     }
 
     override fun onPlaceClicked(event: Event, position: Int) {
-        requireView().findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToDetailsEventFragment(
-                event
-            )
-        )
+        lifecycleScope.launch {
+            requireView().findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsEventFragment(event))
+
+        }
     }
 
     private suspend fun getValueFromKey(key: String) : String? {

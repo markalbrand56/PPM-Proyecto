@@ -7,7 +7,7 @@ interface EventRepository {
     suspend fun createEvent(event: Event, userID: String): Resource<Boolean>
     suspend fun updateEvent(event: Event, userID: String): Resource<Boolean>
     suspend fun deleteEvent(event: Event, userID: String): Resource<Boolean>
-    suspend fun getEventById(id: Int, userID: String): Resource<Event?>
+    suspend fun getEventByFireStoreId(id: String, userID: String): Resource<Event?>
     suspend fun getEvents(userID: String): Resource<List<Event>?>
     suspend fun clearAllEvents(userID: String): Resource<Boolean>
     suspend fun deleteAllEvents(userID: String): Resource<Boolean>

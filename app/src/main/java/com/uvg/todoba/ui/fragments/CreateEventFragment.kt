@@ -230,7 +230,25 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             is CategoryState.Updated -> {
                 layout.visibility = View.GONE
                 progressBar1.visibility = View.GONE
-                categoryList = state.categories.toMutableList()
+                if (state.categories.isNotEmpty()) {
+                    categoryList = state.categories.toMutableList()
+                }else{
+                    categoryList = mutableListOf(
+                        Category(
+                            firebaseId = UUID.randomUUID().toString(),
+                            name = "Recordatorios",
+                            id = 0
+                        ),
+                    )
+                    lifecycleScope.launch {
+                        categoryViewModel.addCategory(
+                            requireContext().dataStore.getPreference("user", ""),
+                            categoryList[0].name
+                        )
+
+                    }
+
+                }
                 options = arrayListOf()
                 for (item in categoryList) {
                     if (item.name.isNotEmpty()) {

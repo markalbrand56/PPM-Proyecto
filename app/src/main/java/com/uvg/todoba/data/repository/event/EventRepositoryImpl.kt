@@ -59,9 +59,9 @@ class EventRepositoryImpl(
         val event = eventDao.getEventById(id)
         if (event == null) {
             val eventDTO = api.getById(id, userID)
-            return if (eventDTO != null) {
-                eventDao.insertEvent(eventDTO.toEntity())
-                Resource.Success(eventDTO.toEntity())
+            return if (eventDTO is Resource.Success) {
+                eventDTO.data?.let { eventDao.insertEvent(it.toEntity()) }
+                Resource.Success(eventDTO.data?.toEntity())
             } else{
                 Resource.Error("Error")
             }
@@ -70,29 +70,23 @@ class EventRepositoryImpl(
     }
 
     override suspend fun getEvents(userID: String): Resource<List<Event>?> {
-        // Primero se intenta obtener de la base de datos local, si no se prueba con Firestore
-        val events = eventDao.getEvents()
-        if (events.isEmpty()) {
-            val eventsDTO = api.getAll(userID)
-            if (eventsDTO != null) {
-                for (event in eventsDTO) {
-                    eventDao.insertEvent(event.toEntity())
-                }
-                return Resource.Success(eventsDTO.map { it.toEntity() })
-            } else{
-                return Resource.Error("Error")
+        val eventsApi = api.getAll(userID)
+        return if (eventsApi is Resource.Success) {
+            val events = eventsApi.data!!.map { eventDTO -> eventDTO.toEntity() }
+            // Se actualiza la base de datos local con los datos más recientes
+            eventDao.deleteAllEvents()
+            for (event in events) {
+                eventDao.insertEvent(event)
+            }
+            Resource.Success(events)
+        } else {
+            try {
+                val events = eventDao.getEvents()
+                Resource.Success(events)
+            } catch (e: Exception) {
+                Resource.Error(e.message ?: "Error")
             }
         }
-/*        val eventsApi = api.getAll(userID)
-        val events = if (eventsApi != null) {
-            for (event in eventsApi) {
-                db.insertEvent(event.toEntity())
-            }
-            eventsApi.map { it.toEntity() }
-        } else {
-            null
-        }*/
-        return Resource.Success(events)
     }
 
     override suspend fun clearAllEvents(userID: String): Resource<Boolean> {

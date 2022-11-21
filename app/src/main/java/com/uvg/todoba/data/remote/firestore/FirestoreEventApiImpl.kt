@@ -38,7 +38,7 @@ class FirestoreEventApiImpl(
         }
     }
 
-    override suspend fun getById(id: Int, userId: String): EventDTO? {
+    override suspend fun getById(id: Int, userId: String): Resource<EventDTO?> {
         return try {
             val document = firestore.collection(userId)
                 .document("data")
@@ -46,23 +46,22 @@ class FirestoreEventApiImpl(
                 .document("$id")
                 .get()
                 .await()
-            document.toObject<EventDTO>()
+            Resource.Success(document.toObject<EventDTO>())
         } catch (e: Exception) {
-            null
+            Resource.Error(e.message ?: "Error")
         }
 
     }
 
-    override suspend fun getAll(userId: String): List<EventDTO>? {
+    override suspend fun getAll(userId: String): Resource<List<EventDTO>?> {
         return try {
             val querySnapshot = firestore.collection("/${userId}/data/events")
                 .get()
                 .await()
             val result = querySnapshot.documents.map {documentSnapshot -> documentSnapshot.toObject<EventDTO>()!!}
-            result
+            Resource.Success(result)
         } catch (e: Exception) {
-            println(e.message)
-            null
+            Resource.Error(e.message ?: "Error")
         }
     }
 

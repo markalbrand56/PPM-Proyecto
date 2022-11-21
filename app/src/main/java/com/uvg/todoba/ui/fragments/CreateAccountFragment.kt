@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -25,6 +27,9 @@ import kotlinx.coroutines.launch
 class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
     private lateinit var binding: FragmentCreateAccountBinding
     private lateinit var sessionViewModel: SessionViewModel
+    private lateinit var progressBar: ProgressBar
+    private lateinit var button: Button
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +42,8 @@ class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        button = view.findViewById(R.id.button_login)
+        progressBar = view.findViewById(R.id.progress_circular)
         val authRepository = AuthRepositoryImpl(
             authAPI = FirebaseAuthApiImpl()
         )
@@ -59,13 +66,14 @@ class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
                 findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToHomeFragment())
             }
             is SessionState.Loading -> {
-                Toast.makeText(
-                    requireContext(),
-                    "Loading...",
-                    Toast.LENGTH_SHORT
-                ).show()
+                button.visibility = View.GONE
+                progressBar.visibility = View.VISIBLE
             }
-            else -> {}
+            else -> {
+                button.visibility = View.VISIBLE
+                progressBar.visibility = View.GONE
+
+            }
         }
     }
 

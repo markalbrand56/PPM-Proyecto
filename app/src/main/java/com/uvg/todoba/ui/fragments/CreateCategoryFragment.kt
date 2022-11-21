@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
@@ -31,6 +33,8 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
     private lateinit var repository: CategoryRepository
     private lateinit var database: DatabaseCategories
     private lateinit var viewModel: CategoryViewModel
+    private lateinit var progressBar: ProgressBar
+    private lateinit var button: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +47,8 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        button = view.findViewById(R.id.button_createCategoryFragment_crearCategoria)
+        progressBar = view.findViewById(R.id.progress_circular)
         database = Room.databaseBuilder(
             requireContext(),
             DatabaseCategories::class.java,
@@ -86,13 +91,12 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
     private fun handleState(state: CategoryState) {
         when(state) {
             is CategoryState.Loading -> {
-                Toast.makeText(
-                    requireContext(),
-                    "Loading",
-                    Toast.LENGTH_SHORT
-                ).show()
+                button.visibility = View.GONE
+                progressBar.visibility = View.VISIBLE
             }
             is CategoryState.Updated -> {
+                button.visibility = View.VISIBLE
+                progressBar.visibility = View.GONE
                 findNavController().navigate(CreateCategoryFragmentDirections.actionCreateCategoryFragmentToHomeFragment())
             }
             is CategoryState.Error -> {

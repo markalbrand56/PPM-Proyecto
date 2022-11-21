@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
@@ -44,6 +45,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
     private lateinit var eventViewModel: EventViewModel
     private lateinit var sessionViewModel: SessionViewModel
     private lateinit var mainToolbar: MaterialToolbar
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +58,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        progressBar = view.findViewById(R.id.progress_circular)
         databaseEvents = Room.databaseBuilder(
             requireContext(),
             DatabaseEvents::class.java,
@@ -99,30 +101,28 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
     private fun handleState(state: EventState) {
         when(state){
             is EventState.Updated -> {
+                progressBar.visibility = View.GONE
                 eventList = state.events.toMutableList()
                 binding.recyclerViewHomeFragment.layoutManager = LinearLayoutManager(context)
                 binding.recyclerViewHomeFragment.setHasFixedSize(true)
                 binding.recyclerViewHomeFragment.adapter = EventAdapter(eventList, this)
             }
             is EventState.Error -> {
+                progressBar.visibility = View.GONE
                 Toast.makeText(
                     requireContext(),
                     state.message,
                     Toast.LENGTH_SHORT).show()
             }
             is EventState.Loading -> {
-                Toast.makeText(
-                    requireContext(),
-                    "Loading...",
-                    Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.VISIBLE
             }
             is EventState.Empty -> {
-                Toast.makeText(
-                    requireContext(),
-                    "Empty",
-                    Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.GONE
             }
-            else -> {}
+            else -> {
+                progressBar.visibility = View.GONE
+            }
         }
     }
 

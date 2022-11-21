@@ -51,6 +51,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.min
 
 
 class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
@@ -141,45 +142,48 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setOnClickListeners() {
-
         binding.buttonCrearEvento.setOnClickListener {
             if(comentario.text.isNullOrBlank()||titulo.text.isNullOrBlank()||ubicacion.text.isNullOrBlank()){
                 Toast.makeText(requireContext(), "Ingrese todos los campos", Toast.LENGTH_LONG).show()
             }else {
-                if (args.event != null) {
-                    button.visibility = View.GONE
-                    progressBar.visibility = View.VISIBLE
-                    lifecycleScope.launch {
-                        eventViewModel.updateEvent(
-                            requireContext().dataStore.getPreference("user", ""),
-                            Event(
-                                id = args.event!!.id,
-                                firestoreId = args.event!!.firestoreId,
-                                title = binding.textInputTitle.text.toString(),
-                                category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                                date = dateCalendar,
-                                time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
-                                location = binding.textInputLugar.text.toString(),
-                                description = binding.textInputComentario.text.toString(),
+                if (comentario.text!!.length>30){
+                    Toast.makeText(requireContext(), "El comentario debe tener menos de 30 caracteres", Toast.LENGTH_LONG).show()
+                }else{
+                    if (args.event != null) {
+                        button.visibility = View.GONE
+                        progressBar.visibility = View.VISIBLE
+                        lifecycleScope.launch {
+                            eventViewModel.updateEvent(
+                                requireContext().dataStore.getPreference("user", ""),
+                                Event(
+                                    id = args.event!!.id,
+                                    firestoreId = args.event!!.firestoreId,
+                                    title = binding.textInputTitle.text.toString(),
+                                    category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
+                                    date = dateCalendar,
+                                    time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
+                                    location = binding.textInputLugar.text.toString(),
+                                    description = binding.textInputComentario.text.toString(),
+                                )
                             )
-                        )
-                    }
-                } else {
-                    button.visibility = View.GONE
-                    progressBar.visibility = View.VISIBLE
-                    lifecycleScope.launch {
-                        eventViewModel.addEvent(
-                            requireContext().dataStore.getPreference("user", ""),
-                            Event(
-                                firestoreId = UUID.randomUUID().toString(),
-                                title = binding.textInputTitle.text.toString(),
-                                category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                                date = dateCalendar,
-                                time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute} ",
-                                location = binding.textInputLugar.text.toString(),
-                                description = binding.textInputComentario.text.toString(),
+                        }
+                    } else {
+                        button.visibility = View.GONE
+                        progressBar.visibility = View.VISIBLE
+                        lifecycleScope.launch {
+                            eventViewModel.addEvent(
+                                requireContext().dataStore.getPreference("user", ""),
+                                Event(
+                                    firestoreId = UUID.randomUUID().toString(),
+                                    title = binding.textInputTitle.text.toString(),
+                                    category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
+                                    date = dateCalendar,
+                                    time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute} ",
+                                    location = binding.textInputLugar.text.toString(),
+                                    description = binding.textInputComentario.text.toString(),
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }
@@ -206,8 +210,8 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                 progressBar1.visibility = View.VISIBLE
             }
             is EventState.Updated -> {
-                layout.visibility = View.VISIBLE
-                progressBar1.visibility = View.VISIBLE
+                layout.visibility = View.GONE
+                progressBar1.visibility = View.GONE
                 Toast.makeText(requireContext(), "Evento creado", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(CreateEventFragmentDirections.actionCreateEventFragmentToHomeFragment())
             }
@@ -224,8 +228,8 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private fun handleCategoryState(state: CategoryState) {
         when (state) {
             is CategoryState.Updated -> {
-                layout.visibility = View.VISIBLE
-                progressBar1.visibility = View.VISIBLE
+                layout.visibility = View.GONE
+                progressBar1.visibility = View.GONE
                 categoryList = state.categories.toMutableList()
                 options = arrayListOf()
                 for (item in categoryList) {
@@ -249,11 +253,6 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             is CategoryState.Loading -> {
                 layout.visibility = View.VISIBLE
                 progressBar1.visibility = View.VISIBLE
-                Toast.makeText(
-                    requireContext(),
-                    "Loading...",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
             else -> {layout.visibility = View.GONE
                 progressBar1.visibility = View.GONE}

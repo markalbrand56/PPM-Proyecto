@@ -25,10 +25,10 @@ class EventViewModel(
             _eventState.value = EventState.Loading
             try {
                 val events = eventRepository.createEvent(event, uid)
-                if (events != null) {
+                if (events is Resource.Success) {
                     getEvents(uid)
                 } else {
-                    _eventState.value = EventState.Empty
+                    _eventState.value = EventState.Error("Error al crear el evento")
                 }
             } catch (e: Exception){
                 _eventState.value = EventState.Error(e.message ?: "Unknown error")

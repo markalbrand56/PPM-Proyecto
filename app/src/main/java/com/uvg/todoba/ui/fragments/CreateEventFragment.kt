@@ -18,6 +18,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.room.Room
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.uvg.todoba.R
@@ -60,8 +62,10 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var eventViewModel: EventViewModel
 
     private lateinit var timePicker: TimePicker
-
     private lateinit var sp1 : Spinner
+    private lateinit var titulo : TextInputEditText
+    private lateinit var ubicacion : TextInputEditText
+    private lateinit var comentario : TextInputEditText
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,9 +76,13 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sp1 = view.findViewById(R.id.spinner_createCategoryFragment)
+        titulo = view.findViewById(R.id.textInputTitle)
+        ubicacion = view.findViewById(R.id.textInputLugar)
+        comentario = view.findViewById(R.id.textInputComentario)
         databaseCategories = Room.databaseBuilder(
             requireContext(),
             DatabaseCategories::class.java,
@@ -116,38 +124,42 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setOnClickListeners() {
         binding.buttonCrearEvento.setOnClickListener {
-            if(args.event != null){
-                // UPDATE
-                lifecycleScope.launch {
-                    eventViewModel.updateEvent(
-                        requireContext().dataStore.getPreference("user", ""),
-                        Event(
-                            id = args.event!!.id,
-                            firestoreId = args.event!!.firestoreId,
-                            title = binding.textInputTitle.text.toString(),
-                            category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                            date = binding.calendarCreateCategoryFragment.date.toString(),
-                            time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
-                            location = binding.textInputLugar.text.toString(),
-                            description = binding.textInputComentario.text.toString(),
+            if(comentario.text.isNullOrBlank()||titulo.text.isNullOrBlank()||ubicacion.text.isNullOrBlank()){
+                Toast.makeText(requireContext(), "Ingrese todos los campos", Toast.LENGTH_LONG).show()
+            }else {
+                if (args.event != null) {
+                    // UPDATE
+                    lifecycleScope.launch {
+                        eventViewModel.updateEvent(
+                            requireContext().dataStore.getPreference("user", ""),
+                            Event(
+                                id = args.event!!.id,
+                                firestoreId = args.event!!.firestoreId,
+                                title = binding.textInputTitle.text.toString(),
+                                category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
+                                date = binding.calendarCreateCategoryFragment.date.toString(),
+                                time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
+                                location = binding.textInputLugar.text.toString(),
+                                description = binding.textInputComentario.text.toString(),
+                            )
                         )
-                    )
-                }
-            } else {
-                // CREATE
-                lifecycleScope.launch {
-                    eventViewModel.addEvent(
-                        requireContext().dataStore.getPreference("user", ""),
-                        Event(
-                            firestoreId = UUID.randomUUID().toString(),
-                            title = binding.textInputTitle.text.toString(),
-                            category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                            date = binding.calendarCreateCategoryFragment.date.toString(),
-                            time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
-                            location = binding.textInputLugar.text.toString(),
-                            description = binding.textInputComentario.text.toString(),
+                    }
+                } else {
+                    // CREATE
+                    lifecycleScope.launch {
+                        eventViewModel.addEvent(
+                            requireContext().dataStore.getPreference("user", ""),
+                            Event(
+                                firestoreId = UUID.randomUUID().toString(),
+                                title = binding.textInputTitle.text.toString(),
+                                category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
+                                date = binding.calendarCreateCategoryFragment.date.toString(),
+                                time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute} ",
+                                location = binding.textInputLugar.text.toString(),
+                                description = binding.textInputComentario.text.toString(),
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
@@ -198,16 +210,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                 }
                 val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_dropdown_item, options)
                 sp1.adapter = arrayAdapter
-                sp1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        Toast.makeText(requireContext(), "option selected", Toast.LENGTH_SHORT).show()
-                    }
 
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-                        TODO("Not yet implemented")
-                    }
-
-                }
             }
             is CategoryState.Error -> {
                 Toast.makeText(

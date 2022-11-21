@@ -30,12 +30,14 @@ class EventAdapter (
         private val eventCategory: TextView = view.findViewById(R.id.textView_recyclerPlace_Status)
         private val eventDate: TextView = view.findViewById(R.id.textView_recyclerPlace_fecha)
         private val eventTime: TextView = view.findViewById(R.id.textView_recyclerPlace_hora)
+        private val letra: TextView = view.findViewById(R.id.textView_recyclePlace_letra)
 
         fun setData(event: Event){
             eventTitle.text = event.title
             eventCategory.text = event.category
             eventDate.text = event.date
             eventTime.text = event.time
+            letra.text = event.category[0].toString()
             layoutEvent.setOnClickListener {
                 listener.onPlaceClicked(event, this.adapterPosition)
             }

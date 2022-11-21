@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.uvg.todoba.data.repository.auth.AuthRepository
 import com.uvg.todoba.ui.viewmodels.states.SessionState
 import com.uvg.todoba.util.dataStore
+import com.uvg.todoba.util.getPreference
 import com.uvg.todoba.util.setPreference
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +19,17 @@ class SessionViewModel(
     private val _sessionState = MutableStateFlow<SessionState>(SessionState.LoggedOut)
     val sessionState = _sessionState
     private var sessionJob: Job? = null
+
+    fun verifySession() {
+        sessionJob?.cancel()
+        sessionJob = viewModelScope.launch {
+            val uid = context.dataStore.getPreference("user", "")
+
+            if (uid != "") {
+                _sessionState.value = SessionState.LoggedIn(uid)
+            }
+        }
+    }
 
     fun signIn(email: String, password: String) {
         sessionJob?.cancel()

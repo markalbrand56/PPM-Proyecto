@@ -10,4 +10,6 @@
     <color name="gray">#DDDDDD</color>
     <color name="transparency_gray">#CCDDDDDD</color>
     <color name="Light_Blue">#03A9F4</color>
+    <color name="colorAccent">#536DFE</color>
+    <color name="colorRed">#ff0000</color>
 </resources>

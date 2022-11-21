@@ -156,8 +156,10 @@
             android:layout_height="100dp"
             android:layout_margin="@dimen/margin_mid"
             android:hint="@string/comentario"
-            app:counterMaxLength="200"
+            app:counterMaxLength="30"
             app:layout_constraintEnd_toEndOf="parent"
+            app:counterEnabled="true"
+            app:counterOverflowTextAppearance="@style/TextLimitError"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloComentario">
 

@@ -51,6 +51,8 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var databaseEvents: DatabaseEvents
     private lateinit var eventViewModel: EventViewModel
 
+    private lateinit var sp1 : 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -34,4 +34,7 @@
     <string name="selecciona_categoria">Selecciona la categoria del evento</string>
     <string name="lugar_evento">Indica el lugar para el evento</string>
     <string name="lugar_del_evento">Lugar del evento</string>
+    <string name="ingresa_hora_limite__evento">Ingresa la hora limite del evento</string>
+    <string name="comentario">Comentario</string>
+    <string name="ingresa_un_comentario">Ingresa un comentario</string>
 </resources>

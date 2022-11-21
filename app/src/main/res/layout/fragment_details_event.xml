@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/margin_mid"
         android:text="@string/nombre_del_evento"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
         android:layout_marginTop="@dimen/margin_mid"
         android:text="@string/titulo_ubicacion"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_nombreEvento" />
@@ -43,7 +43,7 @@
         android:layout_marginTop="@dimen/margin_mid"
         android:text="@string/hora"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_ubicacion" />
@@ -56,7 +56,7 @@
         android:layout_marginTop="@dimen/margin_mid"
         android:text="@string/fecha_limite"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_hora" />
@@ -69,7 +69,7 @@
         android:layout_marginTop="@dimen/margin_mid"
         android:text="@string/categoria"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_FechaLimite" />
@@ -82,7 +82,7 @@
         android:layout_marginTop="@dimen/margin_mid"
         android:text="@string/comentarios"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_Categoria" />
@@ -97,7 +97,7 @@
         android:text="@string/texto_de_ejemplo"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_TituloNombreEvento"
         app:layout_constraintTop_toTopOf="parent" />
@@ -127,7 +127,7 @@
         android:text="@string/texto_de_ejemplo"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_TituloHora"
         app:layout_constraintTop_toBottomOf="@+id/textView_ubicacion" />
@@ -142,7 +142,7 @@
         android:text="@string/texto_de_ejemplo"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_TituloFechaLimite"
         app:layout_constraintTop_toBottomOf="@+id/textView_hora" />
@@ -156,23 +156,22 @@
         android:text="@string/texto_de_ejemplo"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_TituloCategoria"
         app:layout_constraintTop_toBottomOf="@+id/textView_FechaLimite" />
 
     <TextView
         android:id="@+id/textView_Comentarios"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_mid"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/margin_mid"
         android:text="@string/texto_de_ejemplo"
         android:textAlignment="textEnd"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/small_textsize"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView_TituloComentario"
         app:layout_constraintTop_toBottomOf="@+id/textView_Categoria" />
 
@@ -180,7 +179,7 @@
         android:id="@+id/button_fragmentDetails_MarcarCompletado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="@dimen/margin_xl"
         android:background="@drawable/rectangle_buttton"
         android:text="@string/marcar_como_completado"
         app:layout_constraintBottom_toBottomOf="parent"

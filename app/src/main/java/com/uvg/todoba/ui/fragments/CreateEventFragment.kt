@@ -67,14 +67,14 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var eventRepository : EventRepository
     private lateinit var databaseEvents: DatabaseEvents
     private lateinit var eventViewModel: EventViewModel
+    private lateinit var currentDate : String
 
     private lateinit var timePicker: TimePicker
     private lateinit var sp1 : Spinner
     private lateinit var titulo : TextInputEditText
     private lateinit var ubicacion : TextInputEditText
     private lateinit var comentario : TextInputEditText
-    private lateinit var calendarView: CalendarView
-    private lateinit var dateCalendar : String
+    private lateinit var calendar: CalendarView
     private lateinit var button: Button
     private lateinit var progressBar: ProgressBar
     private lateinit var progressBar1: ProgressBar
@@ -96,12 +96,14 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
         titulo = view.findViewById(R.id.textInputTitle)
         ubicacion = view.findViewById(R.id.textInputLugar)
         comentario = view.findViewById(R.id.textInputComentario)
-        calendarView = view.findViewById(R.id.calendar_createCategoryFragment)
-        dateCalendar = covertDate(calendarView.date)
+        calendar = view.findViewById(R.id.calendar_createCategoryFragment)
         button = view.findViewById(R.id.button_crear_evento)
         progressBar = view.findViewById(R.id.progress_circular)
         progressBar1 = view.findViewById(R.id.progress_circular2)
         layout = view.findViewById(R.id.transparent_Layout)
+        calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            currentDate = "$dayOfMonth/${(month.toInt()+1).toString()}/$year"
+        }
         databaseCategories = Room.databaseBuilder(
             requireContext(),
             DatabaseCategories::class.java,
@@ -160,7 +162,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                                     firestoreId = args.event!!.firestoreId,
                                     title = binding.textInputTitle.text.toString(),
                                     category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                                    date = dateCalendar,
+                                    date = currentDate,
                                     time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute.toString().padStart(2, '0')}",
                                     location = binding.textInputLugar.text.toString(),
                                     description = binding.textInputComentario.text.toString(),
@@ -177,7 +179,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                                     firestoreId = UUID.randomUUID().toString(),
                                     title = binding.textInputTitle.text.toString(),
                                     category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                                    date = dateCalendar,
+                                    date = currentDate,
                                     time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute.toString().padStart(2, '0')} ",
                                     location = binding.textInputLugar.text.toString(),
                                     description = binding.textInputComentario.text.toString(),

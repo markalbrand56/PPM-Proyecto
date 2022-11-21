@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
@@ -103,25 +104,34 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
             is EventState.Updated -> {
                 progressBar.visibility = View.GONE
                 eventList = state.events.toMutableList()
+                if (eventList.isEmpty()){
+                    binding.EmptyTextView.visibility = View.VISIBLE
+                }else{
+                    binding.EmptyTextView.visibility = View.GONE
+                }
                 binding.recyclerViewHomeFragment.layoutManager = LinearLayoutManager(context)
                 binding.recyclerViewHomeFragment.setHasFixedSize(true)
                 binding.recyclerViewHomeFragment.adapter = EventAdapter(eventList, this)
             }
             is EventState.Error -> {
                 progressBar.visibility = View.GONE
+                binding.EmptyTextView.visibility = View.GONE
                 Toast.makeText(
                     requireContext(),
                     state.message,
                     Toast.LENGTH_SHORT).show()
             }
             is EventState.Loading -> {
-                progressBar.visibility = View.VISIBLE
+                progressBar.visibility = View.GONE
+                binding.EmptyTextView.visibility = View.GONE
             }
             is EventState.Empty -> {
                 progressBar.visibility = View.GONE
+                binding.EmptyTextView.visibility = View.GONE
             }
             else -> {
                 progressBar.visibility = View.GONE
+                binding.EmptyTextView.visibility = View.GONE
             }
         }
     }

@@ -12,7 +12,7 @@
         android:id="@+id/inputLayout_createCategoryFragment_nombreEvento"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:hint="@string/hint_category"
         app:layout_constraintEnd_toEndOf="parent"

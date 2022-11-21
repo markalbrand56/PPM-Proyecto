@@ -8,34 +8,49 @@
     tools:visibility="visible"
     tools:context=".ui.fragments.CreateCategoryFragment">
 
+    <TextView
+        android:id="@+id/textView_Titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="@string/anadir_categoria"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/mid_textsize"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_Categoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/hint_category"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/small_textsize"
+        app:layout_constraintEnd_toEndOf="@+id/inputLayout_createCategoryFragment_nombreEvento"
+        app:layout_constraintStart_toStartOf="@+id/inputLayout_createCategoryFragment_nombreEvento"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Titulo" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayout_createCategoryFragment_nombreEvento"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:hint="@string/hint_category"
+        android:hint="@string/nombre_categoria"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView_Categoria">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputCategoria"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
-    <TextView
-        android:id="@+id/textview_createCategoryFragment_TituloCalendario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/selecciona_un_color_para_esta_categoria"
-        android:textColor="@color/black"
-        android:textSize="@dimen/small_textsize"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputLayout_createCategoryFragment_nombreEvento"
-    />
 
     <Button
         android:id="@+id/button_createCategoryFragment_crearCategoria"

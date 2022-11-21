@@ -161,7 +161,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                                     title = binding.textInputTitle.text.toString(),
                                     category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
                                     date = dateCalendar,
-                                    time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
+                                    time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute.toString().padStart(2, '0')}",
                                     location = binding.textInputLugar.text.toString(),
                                     description = binding.textInputComentario.text.toString(),
                                 )
@@ -178,7 +178,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                                     title = binding.textInputTitle.text.toString(),
                                     category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
                                     date = dateCalendar,
-                                    time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute} ",
+                                    time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute.toString().padStart(2, '0')} ",
                                     location = binding.textInputLugar.text.toString(),
                                     description = binding.textInputComentario.text.toString(),
                                 )

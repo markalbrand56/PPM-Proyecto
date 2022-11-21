@@ -70,4 +70,16 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_mid"
+        app:layout_constraintEnd_toEndOf="@+id/inputLayout_createAccountFragment_password"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/inputLayout_createAccountFragment_password"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayout_createAccountFragment_password" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

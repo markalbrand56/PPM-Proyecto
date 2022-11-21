@@ -7,10 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.CalendarView
+import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
@@ -44,7 +48,9 @@ import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import java.util.UUID
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
@@ -66,6 +72,12 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var titulo : TextInputEditText
     private lateinit var ubicacion : TextInputEditText
     private lateinit var comentario : TextInputEditText
+    private lateinit var calendarView: CalendarView
+    private lateinit var dateCalendar : String
+    private lateinit var button: Button
+    private lateinit var progressBar: ProgressBar
+    private lateinit var progressBar1: ProgressBar
+    private lateinit var layout: ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,6 +95,12 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
         titulo = view.findViewById(R.id.textInputTitle)
         ubicacion = view.findViewById(R.id.textInputLugar)
         comentario = view.findViewById(R.id.textInputComentario)
+        calendarView = view.findViewById(R.id.calendar_createCategoryFragment)
+        dateCalendar = covertDate(calendarView.date)
+        button = view.findViewById(R.id.button_crear_evento)
+        progressBar = view.findViewById(R.id.progress_circular)
+        progressBar1 = view.findViewById(R.id.progress_circular2)
+        layout = view.findViewById(R.id.transparent_Layout)
         databaseCategories = Room.databaseBuilder(
             requireContext(),
             DatabaseCategories::class.java,
@@ -123,12 +141,14 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setOnClickListeners() {
+
         binding.buttonCrearEvento.setOnClickListener {
             if(comentario.text.isNullOrBlank()||titulo.text.isNullOrBlank()||ubicacion.text.isNullOrBlank()){
                 Toast.makeText(requireContext(), "Ingrese todos los campos", Toast.LENGTH_LONG).show()
             }else {
                 if (args.event != null) {
-                    // UPDATE
+                    button.visibility = View.GONE
+                    progressBar.visibility = View.VISIBLE
                     lifecycleScope.launch {
                         eventViewModel.updateEvent(
                             requireContext().dataStore.getPreference("user", ""),
@@ -137,7 +157,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                                 firestoreId = args.event!!.firestoreId,
                                 title = binding.textInputTitle.text.toString(),
                                 category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                                date = binding.calendarCreateCategoryFragment.date.toString(),
+                                date = dateCalendar,
                                 time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute}",
                                 location = binding.textInputLugar.text.toString(),
                                 description = binding.textInputComentario.text.toString(),
@@ -145,7 +165,8 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                         )
                     }
                 } else {
-                    // CREATE
+                    button.visibility = View.GONE
+                    progressBar.visibility = View.VISIBLE
                     lifecycleScope.launch {
                         eventViewModel.addEvent(
                             requireContext().dataStore.getPreference("user", ""),
@@ -153,7 +174,7 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                                 firestoreId = UUID.randomUUID().toString(),
                                 title = binding.textInputTitle.text.toString(),
                                 category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                                date = binding.calendarCreateCategoryFragment.date.toString(),
+                                date = dateCalendar,
                                 time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute} ",
                                 location = binding.textInputLugar.text.toString(),
                                 description = binding.textInputComentario.text.toString(),
@@ -181,26 +202,30 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private fun handleEventState(state: EventState) {
         when (state) {
             is EventState.Loading -> {
-                Toast.makeText(
-                    requireContext(),
-                    "Loading",
-                    Toast.LENGTH_SHORT
-                ).show()
+                layout.visibility = View.VISIBLE
+                progressBar1.visibility = View.VISIBLE
             }
             is EventState.Updated -> {
+                layout.visibility = View.VISIBLE
+                progressBar1.visibility = View.VISIBLE
                 Toast.makeText(requireContext(), "Evento creado", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(CreateEventFragmentDirections.actionCreateEventFragmentToHomeFragment())
             }
             is EventState.Error -> {
+                layout.visibility = View.GONE
+                progressBar1.visibility = View.GONE
                 Toast.makeText(requireContext(), "Error al crear evento", Toast.LENGTH_SHORT).show()
             }
-            else -> {}
+            else -> {layout.visibility = View.GONE
+                progressBar1.visibility = View.GONE}
         }
     }
 
     private fun handleCategoryState(state: CategoryState) {
         when (state) {
             is CategoryState.Updated -> {
+                layout.visibility = View.VISIBLE
+                progressBar1.visibility = View.VISIBLE
                 categoryList = state.categories.toMutableList()
                 options = arrayListOf()
                 for (item in categoryList) {
@@ -213,6 +238,8 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
 
             }
             is CategoryState.Error -> {
+                layout.visibility = View.GONE
+                progressBar1.visibility = View.GONE
                 Toast.makeText(
                     requireContext(),
                     "Error: ${state.message}",
@@ -220,13 +247,16 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                 ).show()
             }
             is CategoryState.Loading -> {
+                layout.visibility = View.VISIBLE
+                progressBar1.visibility = View.VISIBLE
                 Toast.makeText(
                     requireContext(),
                     "Loading...",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            else -> {}
+            else -> {layout.visibility = View.GONE
+                progressBar1.visibility = View.GONE}
         }
     }
 
@@ -234,5 +264,13 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
         val dataStoreKey = stringPreferencesKey(key)
         val preferences = requireContext().dataStore.data.first()
         return preferences[dataStoreKey]
+    }
+
+    private fun covertDate(time : Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("dd/MM/yyyy")
+        format.timeZone = TimeZone.getTimeZone("GTM")
+
+        return format.format(date)
     }
 }

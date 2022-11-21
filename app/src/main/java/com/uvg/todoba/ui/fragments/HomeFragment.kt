@@ -109,6 +109,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
                     "Empty",
                     Toast.LENGTH_SHORT).show()
             }
+            else -> {}
         }
     }
 
@@ -146,12 +147,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
     override fun onPlaceClicked(event: Event, position: Int) {
         requireView().findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToDetailsEventFragment(
-                nombre = event.title,
-                fecha = event.date,
-                hora = event.time,
-                categoria = event.category,
-                ubicacion = event.location,
-                comentarios = event.description,
+                event
             )
         )
     }

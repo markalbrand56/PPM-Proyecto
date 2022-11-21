@@ -14,7 +14,7 @@ data class Event(
     val time: String,
     val location: String,
     val description: String,
-)
+): java.io.Serializable
 
 fun Event.toDTO(roomID: Int) = EventDTO(
     id = roomID,

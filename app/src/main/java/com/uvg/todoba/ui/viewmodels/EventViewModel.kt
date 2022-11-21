@@ -88,6 +88,23 @@ class EventViewModel(
         }
     }
 
+    fun getEvent(uid: String, id: Int){
+        eventJob?.cancel()
+        eventJob = viewModelScope.launch {
+            _eventState.value = EventState.Loading
+            try {
+                val events = eventRepository.getEventById(id, uid)
+                if (events is Resource.Success) {
+                    _eventState.value = EventState.Fetched(events.data!!)
+                } else {
+                    _eventState.value = EventState.Error("Event not found")
+                }
+            } catch (e: Exception){
+                _eventState.value = EventState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
     fun clearAllEvents(uid: String){
         eventJob?.cancel()
         eventJob = viewModelScope.launch {

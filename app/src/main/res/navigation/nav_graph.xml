@@ -47,6 +47,11 @@
         <action
             android:id="@+id/action_createEventFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="event"
+            app:argType="com.uvg.todoba.data.local.entity.Event"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/detailsEventFragment"
@@ -56,24 +61,12 @@
         <action
             android:id="@+id/action_detailsEventFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_detailsEventFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
         <argument
-            android:name="nombre"
-            app:argType="string" />
-        <argument
-            android:name="hora"
-            app:argType="string" />
-        <argument
-            android:name="fecha"
-            app:argType="string" />
-        <argument
-            android:name="categoria"
-            app:argType="string" />
-        <argument
-            android:name="ubicacion"
-            app:argType="string" />
-        <argument
-            android:name="comentarios"
-            app:argType="string" />
+            android:name="event"
+            app:argType="com.uvg.todoba.data.local.entity.Event" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"

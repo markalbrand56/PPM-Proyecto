@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.room.Room
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 
 
 class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
+    private val args: CreateEventFragmentArgs by navArgs()
     private lateinit var binding: FragmentCreateEventBinding
     private lateinit var categoryList: MutableList<Category>
 
@@ -87,6 +89,10 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
 
         setObservables()
         setOnClickListeners()
+        if(args.event != null){
+            // LLENAR LA DATA
+            println("LLENAR LA DATA")
+        }
     }
 
     private fun setOnClickListeners() {

@@ -15,9 +15,9 @@
 
     <ImageView
         android:id="@+id/imageView_recyclePlace"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="@dimen/circle_size"
+        android:layout_height="@dimen/circle_size"
+        android:layout_marginStart="@dimen/margin_small"
         android:background="@drawable/round_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
 
     <ImageView
         android:id="@+id/imageView_recyclePlace_color"
-        android:layout_width="108dp"
+        android:layout_width="@dimen/width_color_rectangle"
         android:layout_height="match_parent"
         android:background="@drawable/rectangle_bc"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,10 +37,10 @@
         android:id="@+id/textView_recyclerPlace_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="@dimen/small_textsize"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView_recyclePlace"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="@dimen/small_textsize"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView_recyclePlace"
         app:layout_constraintEnd_toEndOf="@+id/imageView_recyclePlace"
@@ -63,7 +63,7 @@
         android:id="@+id/textView_recyclerPlace_Status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="@dimen/margin_small"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/imageView_recyclePlace"
         app:layout_constraintStart_toEndOf="@+id/imageView_recyclePlace"
@@ -74,8 +74,8 @@
         android:id="@+id/textView_recyclerPlace_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imageView_recyclePlace"
         app:layout_constraintTop_toBottomOf="@+id/textView_recyclerPlace_Status"
@@ -85,21 +85,12 @@
         android:id="@+id/textView_recyclerPlace_hora"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="@dimen/margin_mid"
+        android:layout_marginTop="@dimen/margin_small"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/textView_recyclerPlace_fecha"
         app:layout_constraintTop_toBottomOf="@+id/textView_recyclerPlace_Status"
         tools:text="Hora" />
 
-    <CheckBox
-        android:id="@+id/checkbox_recyclerplace"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView_recyclePlace_color"
-        app:layout_constraintStart_toStartOf="@+id/imageView_recyclePlace_color"
-        app:layout_constraintTop_toTopOf="@+id/imageView_recyclePlace_color"
-        android:background="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,7 +65,7 @@ class FirestoreEventApiImpl(
         }
     }
 
-    override suspend fun deleteById(id: Int, userId: String): Resource<Boolean> {
+    override suspend fun deleteById(id: String, userId: String): Resource<Boolean> {
         return try {
             firestore.collection(userId)
                 .document("data")

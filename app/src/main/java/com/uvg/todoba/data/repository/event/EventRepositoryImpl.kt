@@ -42,7 +42,7 @@ class EventRepositoryImpl(
 
     override suspend fun deleteEvent(event: Event, userID: String): Resource<Boolean> {
         return try {
-            val result = api.deleteById(event.id!!, userID)
+            val result = api.deleteById(event.firestoreId, userID)
             if (result is Resource.Success) {
                 eventDao.deleteEvent(event.id!!)
             } else if (result is Resource.Error) {

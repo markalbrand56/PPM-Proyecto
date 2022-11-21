@@ -8,6 +8,6 @@ interface EventsApi {
     suspend fun update(event: EventDTO, userId: String): Resource<Boolean>
     suspend fun getById(id: String, userId: String): Resource<EventDTO?>
     suspend fun getAll(userId: String): Resource<List<EventDTO>?>
-    suspend fun deleteById(id: Int, userId: String): Resource<Boolean>
+    suspend fun deleteById(id: String, userId: String): Resource<Boolean>
     suspend fun deleteAll(userId: String): Resource<Boolean>
 }

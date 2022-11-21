@@ -111,17 +111,17 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.detailsEventFragment -> {
                     mainToolbar.isVisible = true
-                    mainToolbar.menu.findItem(R.id.menu_item_logout).isVisible = true
+                    mainToolbar.menu.findItem(R.id.menu_item_logout).isVisible = false
                     mainToolbar.menu.findItem(R.id.menu_item_deleteAll).isVisible = false
                 }
                 R.id.createCategoryFragment -> {
                     mainToolbar.isVisible = true
-                    mainToolbar.menu.findItem(R.id.menu_item_logout).isVisible = true
+                    mainToolbar.menu.findItem(R.id.menu_item_logout).isVisible = false
                     mainToolbar.menu.findItem(R.id.menu_item_deleteAll).isVisible = false
                 }
                 R.id.createEventFragment -> {
                     mainToolbar.isVisible = true
-                    mainToolbar.menu.findItem(R.id.menu_item_logout).isVisible = true
+                    mainToolbar.menu.findItem(R.id.menu_item_logout).isVisible = false
                     mainToolbar.menu.findItem(R.id.menu_item_deleteAll).isVisible = false
                 }
 

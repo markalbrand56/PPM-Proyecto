@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.room.Room
@@ -16,6 +17,9 @@ import com.uvg.todoba.data.remote.firestore.FirestoreEventApiImpl
 import com.uvg.todoba.data.repository.event.EventRepositoryImpl
 import com.uvg.todoba.databinding.FragmentDetailsEventBinding
 import com.uvg.todoba.ui.viewmodels.EventViewModel
+import com.uvg.todoba.util.dataStore
+import com.uvg.todoba.util.getPreference
+import kotlinx.coroutines.launch
 
 
 class DetailsEventFragment : Fragment(R.layout.fragment_details_event) {
@@ -59,7 +63,10 @@ class DetailsEventFragment : Fragment(R.layout.fragment_details_event) {
             ))
         }
         binding.buttonFragmentDetailsMarcarCompletado.setOnClickListener{
-
+            lifecycleScope.launch {
+                eventViewModel.deleteEvent(requireContext().dataStore.getPreference("user", ""), args.event)
+                requireView().findNavController().navigate(DetailsEventFragmentDirections.actionDetailsEventFragmentToHomeFragment())
+            }
         }
     }
 

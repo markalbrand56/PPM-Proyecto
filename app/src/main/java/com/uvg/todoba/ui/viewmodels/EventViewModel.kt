@@ -45,7 +45,7 @@ class EventViewModel(
                 if (events is Resource.Success) {
                     getEvents(uid)
                 } else {
-                    _eventState.value = EventState.Empty
+                    _eventState.value = EventState.Error("Error al actualizar el evento")
                 }
             } catch (e: Exception){
                 _eventState.value = EventState.Error(e.message ?: "Unknown error")
@@ -62,7 +62,7 @@ class EventViewModel(
                 if (events.data == false) {
                     getEvents(uid)
                 } else {
-                    _eventState.value = EventState.Empty
+                    _eventState.value = EventState.Error("Error al eliminar el evento")
                 }
             } catch (e: Exception){
                 _eventState.value = EventState.Error(e.message ?: "Unknown error")
@@ -80,7 +80,7 @@ class EventViewModel(
                     _eventState.value = EventState.Updated(events.data!!)
                     _eventState.value = EventState.Empty
                 } else {
-                    _eventState.value = EventState.Empty
+                    _eventState.value = EventState.Error("Error al obtener los eventos")
                 }
             } catch (e: Exception){
                 _eventState.value = EventState.Error(e.message ?: "Unknown error")
@@ -112,9 +112,10 @@ class EventViewModel(
             try {
                 val events = eventRepository.clearAllEvents(uid)
                 if (events is Resource.Success) {
-                    getEvents(uid)
-                } else {
+                    _eventState.value = EventState.Updated(mutableListOf())
                     _eventState.value = EventState.Empty
+                } else {
+                    _eventState.value = EventState.Error("Error al limpiar los eventos")
                 }
             } catch (e: Exception){
                 _eventState.value = EventState.Error(e.message ?: "Unknown error")
@@ -129,9 +130,9 @@ class EventViewModel(
             try {
                 val events = eventRepository.deleteAllEvents(uid)
                 if (events is Resource.Success) {
-                    getEvents(uid)
-                } else {
                     _eventState.value = EventState.Empty
+                } else {
+                    _eventState.value = EventState.Error("Error al eliminar los eventos")
                 }
             } catch (e: Exception){
                 _eventState.value = EventState.Error(e.message ?: "Unknown error")

@@ -2,6 +2,7 @@ package com.uvg.todoba.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.uvg.todoba.data.Resource
 import com.uvg.todoba.data.local.entity.Category
 import com.uvg.todoba.data.remote.dto.CategoryDTO
 import com.uvg.todoba.data.repository.category.CategoryRepository
@@ -51,6 +52,23 @@ class CategoryViewModel(
                     getCategories(uid)
                 } else {
                     _categoryState.value = CategoryState.Empty
+                }
+            } catch (e: Exception) {
+                _categoryState.value = CategoryState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    fun deleteAllCategories(uid: String) {
+        eventJob?.cancel()
+        eventJob = viewModelScope.launch {
+            _categoryState.value = CategoryState.Loading
+            try {
+                val categories = categoryRepository.deleteAllCategories(uid)
+                if (categories is Resource.Success) {
+                    _categoryState.value = CategoryState.Empty
+                } else {
+                    _categoryState.value = CategoryState.Error(categories.message ?: "Unknown error")
                 }
             } catch (e: Exception) {
                 _categoryState.value = CategoryState.Error(e.message ?: "Unknown error")

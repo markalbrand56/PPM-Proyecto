@@ -28,6 +28,7 @@ class CategoryRepositoryImpl(
     override suspend fun getAllCategories(userID: String): List<Category>? {
         val categories = categoriesApi.getAll(userID)
         if (categories != null) {  // Siempre se actualiza de internet
+            categoryDao.deleteAllCategories()
             for (category in categories) {
                 categoryDao.insertCategory(category.toEntity())
             }

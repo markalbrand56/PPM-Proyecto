@@ -17,6 +17,7 @@ import com.uvg.todoba.R
 import com.uvg.todoba.data.local.database.DatabaseCategories
 import com.uvg.todoba.data.local.database.DatabaseEvents
 import com.uvg.todoba.data.local.entity.Category
+import com.uvg.todoba.data.local.entity.Event
 import com.uvg.todoba.data.remote.firestore.FirestoreCategoryApiImpl
 import com.uvg.todoba.data.remote.firestore.FirestoreEventApiImpl
 import com.uvg.todoba.data.repository.category.CategoryRepository
@@ -34,6 +35,7 @@ import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 
 class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
@@ -91,13 +93,49 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
         setOnClickListeners()
         if(args.event != null){
             // LLENAR LA DATA
-            println("LLENAR LA DATA")
+            // set title on textinputedittext
+            binding.textInputTitle.setText(args.event!!.title)
+            binding.textInputLugar.setText(args.event!!.location)
+            binding.textInputComentario.setText(args.event!!.description)
         }
     }
 
     private fun setOnClickListeners() {
         binding.buttonCrearEvento.setOnClickListener {
-
+            if(args.event != null){
+                // UPDATE
+                lifecycleScope.launch {
+                    eventViewModel.updateEvent(
+                        requireContext().dataStore.getPreference("user", ""),
+                        Event(
+                            id = args.event!!.id,
+                            firestoreId = args.event!!.firestoreId,
+                            title = binding.textInputTitle.text.toString(),
+                            category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
+                            date = binding.calendarCreateCategoryFragment.date.toString(),
+                            time = "",
+                            location = binding.textInputLugar.text.toString(),
+                            description = binding.textInputComentario.text.toString(),
+                        )
+                    )
+                }
+            } else {
+                // CREATE
+                lifecycleScope.launch {
+                    eventViewModel.addEvent(
+                        requireContext().dataStore.getPreference("user", ""),
+                        Event(
+                            firestoreId = UUID.randomUUID().toString(),
+                            title = binding.textInputTitle.text.toString(),
+                            category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
+                            date = binding.calendarCreateCategoryFragment.date.toString(),
+                            time = "",
+                            location = binding.textInputLugar.text.toString(),
+                            description = binding.textInputComentario.text.toString(),
+                        )
+                    )
+                }
+            }
         }
     }
 

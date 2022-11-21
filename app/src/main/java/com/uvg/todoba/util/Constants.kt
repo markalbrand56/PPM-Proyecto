@@ -21,3 +21,9 @@ suspend fun <T> DataStore<Preferences>.getPreference(key: String, defaultValue: 
         else -> throw IllegalArgumentException("Not supported type")
     } as T
 }
+
+suspend fun DataStore<Preferences>.setPreference(key: String, value: String) {
+    this.edit { preferences ->
+        preferences[stringPreferencesKey(key)] = value
+    }
+}

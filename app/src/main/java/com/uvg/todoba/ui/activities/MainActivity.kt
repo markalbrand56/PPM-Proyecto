@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_item_deleteAll -> {
+
                     lifecycleScope.launch {
                         eventViewModel.deleteAllEvents(applicationContext.dataStore.getPreference("user", ""))
 

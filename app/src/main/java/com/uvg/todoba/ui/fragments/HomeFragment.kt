@@ -161,6 +161,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToWelcomeFragment())
                     true
                 }
+                R.id.menu_item_deleteAll -> {
+                    lifecycleScope.launch {
+                        eventViewModel.deleteAllEvents(requireContext().dataStore.getPreference("user", ""))
+
+                    }
+                    true
+                }
                 else -> false
             }
         }

@@ -1,5 +1,6 @@
 package com.uvg.todoba.ui.activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -19,12 +20,15 @@ import com.uvg.todoba.data.local.database.DatabaseEvents
 import com.uvg.todoba.data.remote.firestore.FirestoreEventApiImpl
 import com.uvg.todoba.data.repository.event.EventRepository
 import com.uvg.todoba.data.repository.event.EventRepositoryImpl
+import com.uvg.todoba.ui.viewmodels.EventViewModel
+import com.uvg.todoba.util.dataStore
+import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainToolbar: MaterialToolbar
     private lateinit var navController: NavController
-    private lateinit var eventRepository: EventRepository
+    private lateinit var eventViewModel: EventViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,10 +56,12 @@ class MainActivity : AppCompatActivity() {
             , "eventsDB"
         ).build()
 
-        eventRepository = EventRepositoryImpl(
+        var eventRepository = EventRepositoryImpl(
             FirestoreEventApiImpl(Firebase.firestore),
             db.eventDao()
         )
+
+        eventViewModel = EventViewModel(eventRepository)
 
 
         listenToNavGraphChanges()
@@ -71,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.menu_item_deleteAll -> {
                     lifecycleScope.launch {
-                        println("Delete all")
+                        eventViewModel.deleteAllEvents(applicationContext.dataStore.getPreference("user", ""))
                     }
                     true
                 }

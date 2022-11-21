@@ -55,7 +55,7 @@ class SessionViewModel(
         }
     }
 
-    fun logOut() {
+    fun logout() {
         sessionJob?.cancel()
         sessionJob = viewModelScope.launch {
             try {

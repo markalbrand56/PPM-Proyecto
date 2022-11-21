@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_homeFragment_to_createCategoryFragment"
             app:destination="@id/createCategoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

@@ -12,24 +12,27 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.uvg.todoba.R
 import com.uvg.todoba.data.local.database.DatabaseEvents
 import com.uvg.todoba.data.local.entity.Event
+import com.uvg.todoba.data.remote.firebase.FirebaseAuthApiImpl
 import com.uvg.todoba.data.remote.firestore.FirestoreEventApiImpl
+import com.uvg.todoba.data.repository.auth.AuthRepositoryImpl
 import com.uvg.todoba.data.repository.event.EventRepository
 import com.uvg.todoba.data.repository.event.EventRepositoryImpl
 import com.uvg.todoba.data.util.adapters.EventAdapter
 import com.uvg.todoba.databinding.FragmentHomeBinding
 import com.uvg.todoba.ui.viewmodels.EventViewModel
+import com.uvg.todoba.ui.viewmodels.SessionViewModel
 import com.uvg.todoba.ui.viewmodels.states.EventState
 import com.uvg.todoba.util.dataStore
 import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
 
 
 class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListener {
@@ -38,7 +41,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
     private var isAllAddVisible : Boolean? = null
     private lateinit var repositoryEvent: EventRepository
     private lateinit var databaseEvents: DatabaseEvents
-    private lateinit var viewModel: EventViewModel
+    private lateinit var eventViewModel: EventViewModel
+    private lateinit var sessionViewModel: SessionViewModel
+    private lateinit var mainToolbar: MaterialToolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,18 +73,25 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
         binding.addeventActionText.visibility = View.GONE
         binding.addCategoryActionText.visibility = View.GONE
 
-        viewModel = EventViewModel(repositoryEvent)
+        eventViewModel = EventViewModel(repositoryEvent)
+
+        val authRepository = AuthRepositoryImpl(
+            FirebaseAuthApiImpl()
+        )
+        sessionViewModel = SessionViewModel(authRepository, requireContext())
+
+        mainToolbar = requireActivity().findViewById(R.id.main_toolbar)
 
         setObservables()
         lifecycleScope.launch {
-            viewModel.getEvents(requireContext().dataStore.getPreference("user", ""))
+            eventViewModel.getEvents(requireContext().dataStore.getPreference("user", ""))
         }
         setListeners()
     }
 
     private fun setObservables(){
         lifecycleScope.launchWhenStarted {
-            viewModel.eventState.collectLatest { state ->
+            eventViewModel.eventState.collectLatest { state ->
                 handleState(state)
             }
         }
@@ -141,6 +153,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
 
         binding.addEventAction.setOnClickListener{
             it.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCreateEventFragment())
+        }
+        mainToolbar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.menu_item_logout -> {
+                    sessionViewModel.logout()
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToWelcomeFragment())
+                    true
+                }
+                else -> false
+            }
         }
 
     }

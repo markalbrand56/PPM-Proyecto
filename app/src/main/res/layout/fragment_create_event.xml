@@ -1,112 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.fragments.CreateEventFragment"
-    tools:visibility="visible">
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    >
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayout_createCategoryFragment_nombreEvento"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_margin="20dp"
-        android:hint="@string/hint_event_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEmail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"/>
-
-    <TextView
-        android:id="@+id/textview_createCategoryFragment_TituloCalendario"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/hint_event_date"
-        app:layout_constraintBottom_toTopOf="@id/calendar_createCategoryFragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputLayout_createCategoryFragment_nombreEvento" />
+        android:background="@color/white"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="horizontal"
+        tools:context=".ui.fragments.CreateEventFragment"
+        tools:visibility="visible">
 
-    <TextView
-        android:id="@+id/textview_createCategoryFragment_TituloCategorias"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:text="@string/selecciona_categoria"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendar_createCategoryFragment" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout_createCategoryFragment_nombreEvento"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_margin="20dp"
+            android:hint="@string/hint_event_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textview_createCategoryFragment_TituloLugar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:text="@string/lugar_evento"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_createCategoryFragment" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <CalendarView
-        android:id="@+id/calendar_createCategoryFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:minDate="11/1/2022"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloCalendario" />
-
-    <Spinner
-        android:id="@+id/spinner_createCategoryFragment"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_margin="20dp"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloCategorias" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayout_createCategoryFragment_lugarEvento"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="356dp"
-        android:layout_height="55dp"
-        android:hint="@string/lugar_del_evento"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloLugar">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputLugar"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_crear_evento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:background="@drawable/rectangle_buttton"
-        android:text="@string/crear_evento"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputLayout_createCategoryFragment_lugarEvento" />
+        <TextView
+            android:id="@+id/textview_createCategoryFragment_TituloCalendario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/hint_event_date"
+            app:layout_constraintBottom_toTopOf="@id/calendar_createCategoryFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputLayout_createCategoryFragment_nombreEvento" />
+
+        <TextView
+            android:id="@+id/textview_createCategoryFragment_TituloCategorias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/selecciona_categoria"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calendar_createCategoryFragment" />
+
+        <TextView
+            android:id="@+id/textview_createCategoryFragment_TituloLugar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/lugar_evento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_createCategoryFragment" />
+
+        <TextView
+            android:id="@+id/textview_createCategoryFragment_TituloLugar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/ingresa_hora_limite__evento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayout_createCategoryFragment_lugarEvento" />
+
+        <CalendarView
+            android:id="@+id/calendar_createCategoryFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:minDate="11/1/2022"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloCalendario" />
+
+        <Spinner
+            android:id="@+id/spinner_createCategoryFragment"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_margin="20dp"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloCategorias" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout_createCategoryFragment_lugarEvento"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="356dp"
+            android:layout_height="55dp"
+            android:hint="@string/lugar_del_evento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloLugar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputLugar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button_crear_evento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_buttton"
+            android:text="@string/crear_evento"
+            android:layout_margin="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputLayout_createCategoryFragment_comentario" />
+
+        <TimePicker
+            android:id="@+id/editTextTime_createEventFragment_horaEvento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:timePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloLugar2" />
+
+        <TextView
+            android:id="@+id/textview_createCategoryFragment_TituloComentario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/ingresa_un_comentario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTime_createEventFragment_horaEvento" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout_createCategoryFragment_comentario"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="356dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_mid"
+            android:hint="@string/comentario"
+            app:counterMaxLength="200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_createCategoryFragment_TituloComentario">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputComentario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

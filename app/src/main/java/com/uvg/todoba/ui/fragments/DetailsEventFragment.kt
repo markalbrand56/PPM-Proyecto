@@ -75,10 +75,8 @@ class DetailsEventFragment : Fragment(R.layout.fragment_details_event) {
         binding.textViewUbicacion.text = args.event.location
         binding.textViewHora.text = args.event.time
         binding.textViewFechaLimite.text = args.event.date
-        binding.textViewFechaCreacion.text = "21/10/2022"
         binding.textViewCategoria.text = args.event.category
         binding.textViewComentarios.text = args.event.description
-        binding.textViewTiempoHorario.text = "1 hora"
     }
 
 

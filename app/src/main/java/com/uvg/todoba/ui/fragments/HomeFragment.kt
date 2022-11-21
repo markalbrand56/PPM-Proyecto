@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.google.firebase.firestore.ktx.firestore
@@ -28,6 +29,7 @@ import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 
 
 class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListener {
@@ -82,7 +84,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
             }
         }
     }
-
     private fun handleState(state: EventState) {
         when(state){
             is EventState.Updated -> {

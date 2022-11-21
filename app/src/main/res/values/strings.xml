@@ -37,4 +37,5 @@
     <string name="ingresa_hora_limite__evento">Ingresa la hora limite del evento</string>
     <string name="comentario">Comentario</string>
     <string name="ingresa_un_comentario">Ingresa un comentario</string>
+    <string name="required">Requerido</string>
 </resources>

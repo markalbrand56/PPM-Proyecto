@@ -151,40 +151,50 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
                 if (comentario.text!!.length>30){
                     Toast.makeText(requireContext(), "El comentario debe tener menos de 30 caracteres", Toast.LENGTH_LONG).show()
                 }else{
-                    if (args.event != null) {
-                        button.visibility = View.GONE
-                        progressBar.visibility = View.VISIBLE
-                        lifecycleScope.launch {
-                            eventViewModel.updateEvent(
-                                requireContext().dataStore.getPreference("user", ""),
-                                Event(
-                                    id = args.event!!.id,
-                                    firestoreId = args.event!!.firestoreId,
-                                    title = binding.textInputTitle.text.toString(),
-                                    category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                                    date = currentDate,
-                                    time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute.toString().padStart(2, '0')}",
-                                    location = binding.textInputLugar.text.toString(),
-                                    description = binding.textInputComentario.text.toString(),
+                    if(titulo.text!!.length>30){
+                        Toast.makeText(requireContext(), "El titulo debe tener menos de 30 caracteres", Toast.LENGTH_LONG).show()
+                    }else {
+                        if (args.event != null) {
+                            button.visibility = View.GONE
+                            progressBar.visibility = View.VISIBLE
+                            lifecycleScope.launch {
+                                eventViewModel.updateEvent(
+                                    requireContext().dataStore.getPreference("user", ""),
+                                    Event(
+                                        id = args.event!!.id,
+                                        firestoreId = args.event!!.firestoreId,
+                                        title = binding.textInputTitle.text.toString(),
+                                        category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
+                                        date = currentDate,
+                                        time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${
+                                            binding.editTextTimeCreateEventFragmentHoraEvento.minute.toString()
+                                                .padStart(2, '0')
+                                        }",
+                                        location = binding.textInputLugar.text.toString(),
+                                        description = binding.textInputComentario.text.toString(),
+                                    )
                                 )
-                            )
-                        }
-                    } else {
-                        button.visibility = View.GONE
-                        progressBar.visibility = View.VISIBLE
-                        lifecycleScope.launch {
-                            eventViewModel.addEvent(
-                                requireContext().dataStore.getPreference("user", ""),
-                                Event(
-                                    firestoreId = UUID.randomUUID().toString(),
-                                    title = binding.textInputTitle.text.toString(),
-                                    category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
-                                    date = currentDate,
-                                    time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${binding.editTextTimeCreateEventFragmentHoraEvento.minute.toString().padStart(2, '0')} ",
-                                    location = binding.textInputLugar.text.toString(),
-                                    description = binding.textInputComentario.text.toString(),
+                            }
+                        } else {
+                            button.visibility = View.GONE
+                            progressBar.visibility = View.VISIBLE
+                            lifecycleScope.launch {
+                                eventViewModel.addEvent(
+                                    requireContext().dataStore.getPreference("user", ""),
+                                    Event(
+                                        firestoreId = UUID.randomUUID().toString(),
+                                        title = binding.textInputTitle.text.toString(),
+                                        category = binding.spinnerCreateCategoryFragment.selectedItem.toString(),
+                                        date = currentDate,
+                                        time = "${binding.editTextTimeCreateEventFragmentHoraEvento.hour} : ${
+                                            binding.editTextTimeCreateEventFragmentHoraEvento.minute.toString()
+                                                .padStart(2, '0')
+                                        } ",
+                                        location = binding.textInputLugar.text.toString(),
+                                        description = binding.textInputComentario.text.toString(),
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 }

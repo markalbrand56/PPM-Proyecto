@@ -130,6 +130,7 @@ class EventViewModel(
             try {
                 val events = eventRepository.deleteAllEvents(uid)
                 if (events is Resource.Success) {
+                    _eventState.value = EventState.Updated(mutableListOf())
                     _eventState.value = EventState.Empty
                 } else {
                     _eventState.value = EventState.Error("Error al eliminar los eventos")

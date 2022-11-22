@@ -112,6 +112,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
                 binding.recyclerViewHomeFragment.layoutManager = LinearLayoutManager(context)
                 binding.recyclerViewHomeFragment.setHasFixedSize(true)
                 binding.recyclerViewHomeFragment.adapter = EventAdapter(eventList, this)
+                binding.recyclerViewHomeFragment.adapter?.notifyDataSetChanged()
             }
             is EventState.Error -> {
                 progressBar.visibility = View.GONE

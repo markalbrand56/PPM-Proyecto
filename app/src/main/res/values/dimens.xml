@@ -3,7 +3,7 @@
     <dimen name="margin_mid">25dp</dimen>
     <dimen name="large_textsize">50sp</dimen>
     <dimen name="mid_textsize">30sp</dimen>
-    <dimen name="small_textsize">20sp</dimen>
+    <dimen name="small_textsize">14sp</dimen>
     <dimen name="margin_large">60dp</dimen>
     <dimen name="margin_xl">200dp</dimen>
     <dimen name="button_height">55sp</dimen>

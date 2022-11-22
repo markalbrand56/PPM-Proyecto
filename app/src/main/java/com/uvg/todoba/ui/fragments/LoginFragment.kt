@@ -87,11 +87,4 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             sessionViewModel.signIn(email, password)
         }
     }
-
-    private suspend fun saveKeyValue(key: String, value: String) {
-        val dataStoreKey = stringPreferencesKey(key)
-        requireContext().dataStore.edit { settings ->
-            settings[dataStoreKey] = value
-        }
-    }
 }

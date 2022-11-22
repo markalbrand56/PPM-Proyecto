@@ -60,15 +60,10 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
     private lateinit var categoryList: MutableList<Category>
     private var options : ArrayList<String> = arrayListOf()
 
-    private lateinit var categoryRepository: CategoryRepository
-    private lateinit var databaseCategories: DatabaseCategories
     private lateinit var categoryViewModel: CategoryViewModel
-
-    private lateinit var eventRepository : EventRepository
-    private lateinit var databaseEvents: DatabaseEvents
     private lateinit var eventViewModel: EventViewModel
-    private lateinit var currentDate : String
 
+    private lateinit var currentDate : String
     private lateinit var timePicker: TimePicker
     private lateinit var sp1 : Spinner
     private lateinit var titulo : TextInputEditText
@@ -104,23 +99,23 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
         calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
             currentDate = "$dayOfMonth/${(month.toInt()+1).toString()}/$year"
         }
-        databaseCategories = Room.databaseBuilder(
+        val databaseCategories = Room.databaseBuilder(
             requireContext(),
             DatabaseCategories::class.java,
             "categoriesDB"
         ).build()
-        categoryRepository = CategoryRepositoryImpl(
+        val categoryRepository = CategoryRepositoryImpl(
             FirestoreCategoryApiImpl(Firebase.firestore),
             databaseCategories.categoryDao()
         )
         categoryViewModel = CategoryViewModel(categoryRepository)
 
-        databaseEvents = Room.databaseBuilder(
+        val databaseEvents = Room.databaseBuilder(
             requireContext(),
             DatabaseEvents::class.java,
             "eventsDB"
         ).build()
-        eventRepository = EventRepositoryImpl(
+        val eventRepository = EventRepositoryImpl(
             FirestoreEventApiImpl(Firebase.firestore),
             databaseEvents.eventDao()
         )
@@ -287,19 +282,5 @@ class CreateEventFragment : Fragment(R.layout.fragment_create_event) {
             else -> {layout.visibility = View.GONE
                 progressBar1.visibility = View.GONE}
         }
-    }
-
-    private suspend fun getValueFromKey(key: String) : String? {
-        val dataStoreKey = stringPreferencesKey(key)
-        val preferences = requireContext().dataStore.data.first()
-        return preferences[dataStoreKey]
-    }
-
-    private fun covertDate(time : Long): String {
-        val date = Date(time)
-        val format = SimpleDateFormat("dd/MM/yyyy")
-        format.timeZone = TimeZone.getTimeZone("GTM")
-
-        return format.format(date)
     }
 }

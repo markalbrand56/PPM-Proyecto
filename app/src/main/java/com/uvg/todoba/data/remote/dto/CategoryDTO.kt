@@ -1,6 +1,5 @@
 package com.uvg.todoba.data.remote.dto
 
-import androidx.room.PrimaryKey
 import com.uvg.todoba.data.local.entity.Category
 
 data class CategoryDTO(

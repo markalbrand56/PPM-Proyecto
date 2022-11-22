@@ -24,6 +24,7 @@ import com.uvg.todoba.databinding.FragmentCreateCategoryBinding
 import com.uvg.todoba.ui.viewmodels.CategoryViewModel
 import com.uvg.todoba.ui.viewmodels.states.CategoryState
 import com.uvg.todoba.util.dataStore
+import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -73,7 +74,7 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
             val categoryName = binding.inputLayoutCreateCategoryFragmentNombreEvento.editText?.text.toString()
             if (categoryName.isNotEmpty()) {
                 lifecycleScope.launch {
-                    viewModel.addCategory(getValueFromKey("user")!!, categoryName)
+                    viewModel.addCategory(requireContext().dataStore.getPreference("user", ""), categoryName)
                 }
             } else {
                 Toast.makeText(requireContext(), "El nombre de la categoría no puede estar vacío", Toast.LENGTH_SHORT).show()
@@ -109,11 +110,6 @@ class CreateCategoryFragment : Fragment(R.layout.fragment_create_category) {
             }
             else -> {}
         }
-    }
-    private suspend fun getValueFromKey(key: String) : String? {
-        val dataStoreKey = stringPreferencesKey(key)
-        val preferences = requireContext().dataStore.data.first()
-        return preferences[dataStoreKey]
     }
 
 }

@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -33,7 +31,6 @@ import com.uvg.todoba.ui.viewmodels.states.EventState
 import com.uvg.todoba.util.dataStore
 import com.uvg.todoba.util.getPreference
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
@@ -59,7 +56,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressBar = view.findViewById(R.id.progress_circular)
+        progressBar = binding.progressCircular
+        isAllAddVisible = false
+        binding.addCategoryAction.visibility = View.GONE
+        binding.addEventAction.visibility = View.GONE
+        binding.addeventActionText.visibility = View.GONE
+        binding.addCategoryActionText.visibility = View.GONE
+
         databaseEvents = Room.databaseBuilder(
             requireContext(),
             DatabaseEvents::class.java,
@@ -70,11 +73,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
             FirestoreEventApiImpl(Firebase.firestore),
             databaseEvents.eventDao()
         )
-        isAllAddVisible = false
-        binding.addCategoryAction.visibility = View.GONE
-        binding.addEventAction.visibility = View.GONE
-        binding.addeventActionText.visibility = View.GONE
-        binding.addCategoryActionText.visibility = View.GONE
 
         eventViewModel = EventViewModel(repositoryEvent)
 
@@ -190,11 +188,5 @@ class HomeFragment : Fragment(R.layout.fragment_home), EventAdapter.EventListene
             requireView().findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsEventFragment(event))
 
         }
-    }
-
-    private suspend fun getValueFromKey(key: String) : String? {
-        val dataStoreKey = stringPreferencesKey(key)
-        val preferences = requireContext().dataStore.data.first()
-        return preferences[dataStoreKey]
     }
 }

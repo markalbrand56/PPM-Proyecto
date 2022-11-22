@@ -86,10 +86,4 @@ class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
         }
     }
 
-    private suspend fun saveKeyValue(key: String, value: String) {
-        val dataStoreKey = stringPreferencesKey(key)
-        requireContext().dataStore.edit { settings ->
-            settings[dataStoreKey] = value
-        }
-    }
 }
